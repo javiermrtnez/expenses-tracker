@@ -1,6 +1,6 @@
 <h1 align="center">
   <div align="center">
-    <img alt="ToDoApp logo" src="./public/favicon.svg" height="125px" width="auto"/>
+    <img alt="ToDoApp logo" src="./public/favicon.svg" height="150px" width="auto"/>
   </div>
   <br/>
   Income and expenses tracker - Javier Martínez
