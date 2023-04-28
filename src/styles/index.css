@@ -1,17 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --navbar-height: 64px;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --page-padding: 20px;
+  --page-width: 1200px;
+  --page-width-with-padding: calc(var(--page-width) + calc(2 * var(--page-padding)));
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%; */
+  --logo-gradient: linear-gradient(to bottom right, #10b981, #eab308)
 }
 
 body {
