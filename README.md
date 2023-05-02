@@ -8,8 +8,8 @@
 <p align="center">
     Income and expenses tracker made with  React.js.
     <br />
-    <a href="https://income-expenses-tracker-javiermrtnez.vercel.app/">Go to website</a>&nbsp;
+    <a href="https://expenses-tracker-javiermrtnez.vercel.app/">Go to website</a>&nbsp;
     ·
-    &nbsp;<a href="https://github.com/javiermrtnez/income-expenses-tracker/issues">Report Bug</a>
+    &nbsp;<a href="https://github.com/javiermrtnez/expenses-tracker/issues">Report Bug</a>
   </p>
 <br/>
