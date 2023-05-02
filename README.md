@@ -3,10 +3,10 @@
     <img alt="ToDoApp logo" src="./public/favicon.svg" height="150px" width="auto"/>
   </div>
   <br/>
-  Income and expenses tracker - Javier Martínez
+  Expenses tracker - Javier Martínez
 </h1>
 <p align="center">
-    Income and expenses tracker made with  React.js.
+    Expenses tracker made with  React.js.
     <br />
     <a href="https://expenses-tracker-javiermrtnez.vercel.app/">Go to website</a>&nbsp;
     ·
