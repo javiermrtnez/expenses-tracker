@@ -52,7 +52,7 @@ const Navbar = () => {
         )}
 
         <div className='flex gap-2 flex-1 justify-end'>
-          {!user ? <LogInButton /> : <SignOutButton />}
+          {user ? <SignOutButton /> : <LogInButton />}
         </div>
       </div>
     </header>
