@@ -2,16 +2,18 @@ import { AdditionalUserInfo, UserCredential, getAdditionalUserInfo } from 'fireb
 import * as authService from '../services/auth.service';
 import { useNavigate } from 'react-router-dom';
 import { notificationError, notificationSuccess } from '../utils/functions/notifications';
+import useUser from './useUser';
 
 const useAuth = () => {
   const navigate = useNavigate();
+  const { createUser } = useUser();
 
   const saveNewUser = async (userCredential: UserCredential): Promise<void> => {
     const { isNewUser } = getAdditionalUserInfo(userCredential) as AdditionalUserInfo;
 
     if (isNewUser) {
       const { user } = userCredential;
-      //   await createUser(user.uid, user.email);
+      await createUser(user.uid, user.email);
     }
   };
 
