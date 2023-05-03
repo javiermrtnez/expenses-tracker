@@ -1,8 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import { useAuthContext } from '../../context/AuthContext';
+import LoadingPage from '../../pages/LoadingPage';
 
 const BaseLayout = () => {
-  return (
+  const { user } = useAuthContext();
+
+  return user === undefined ? (
+    <LoadingPage />
+  ) : (
     <>
       <Navbar />
 

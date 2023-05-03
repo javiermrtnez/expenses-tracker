@@ -5,6 +5,7 @@ import SummaryPage from './pages/SummaryPage';
 import LogInPage from './pages/LogInPage';
 import Toaster from './components/Toaster';
 import { AuthProvider } from './context/AuthContext';
+import { AuthenticatedRoute, UnauthenticatedRoute } from './guards/AuthGuard';
 
 function App() {
   return (
@@ -12,10 +13,15 @@ function App() {
       <Toaster />
       <Routes>
         <Route element={<BaseLayout />}>
-          <Route path='/' element={<SummaryPage />} />
-          <Route path='/login' element={<LogInPage />} />
-          <Route path='/income' element={<div>Income page</div>} />
-          <Route path='/expenses' element={<ExpensesPage />} />
+          <Route element={<AuthenticatedRoute />}>
+            <Route path='/' element={<SummaryPage />} />
+            <Route path='/income' element={<div>Income page</div>} />
+            <Route path='/expenses' element={<ExpensesPage />} />
+          </Route>
+
+          <Route element={<UnauthenticatedRoute />}>
+            <Route path='/login' element={<LogInPage />} />
+          </Route>
         </Route>
       </Routes>
     </AuthProvider>
