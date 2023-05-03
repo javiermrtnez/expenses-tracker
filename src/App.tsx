@@ -6,6 +6,7 @@ import LogInPage from './pages/LogInPage';
 import Toaster from './components/Toaster';
 import { AuthProvider } from './context/AuthContext';
 import { AuthenticatedRoute, UnauthenticatedRoute } from './guards/AuthGuard';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
           <Route element={<UnauthenticatedRoute />}>
             <Route path='/login' element={<LogInPage />} />
           </Route>
+
+          <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
     </AuthProvider>
