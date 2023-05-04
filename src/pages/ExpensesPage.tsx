@@ -42,7 +42,8 @@ const EXPENSES_DEFAULT_STATE: ExpenseFormData = {
 };
 
 const ExpensesPage = () => {
-  const { loadingExpensesStore, loading, expenses, createExpense, deleteExpense } = useExpenses();
+  const { loadingExpensesStore, expenses, createExpense, deleteExpense } = useExpenses();
+  console.log('expenses', expenses);
   const [expenseFormData, setExpenseFormData] = useState<ExpenseFormData>(EXPENSES_DEFAULT_STATE);
 
   const handleDateChange = (value: DateRangePickerValue) => {

@@ -24,10 +24,11 @@ const useExpenses = () => {
   ) => {
     setLoading(true);
 
+    const id = crypto.randomUUID();
     expensesService
-      .createExpense({ id: crypto.randomUUID(), date, description, amount, category })
+      .createExpense({ id, date, description, amount, category })
       .then(() => {
-        createExpenseStore(date, description, amount, category);
+        createExpenseStore({ id, date, description, amount, category });
       })
       .catch((e) => {
         console.error(e);

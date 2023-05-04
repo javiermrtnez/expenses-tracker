@@ -14,12 +14,7 @@ interface ExpensesState {
   expenses: Expense[];
   clearExpensesStore: () => void;
   fetchExpensesStore: () => Promise<void>;
-  createExpenseStore: (
-    date: ExpenseDate,
-    description: ExpenseDescription,
-    amount: ExpenseAmount,
-    category: ExpenseCategory
-  ) => void;
+  createExpenseStore: ({ id, date, description, amount, category }: Expense) => void;
   deleteExpenseStore: (id: ExpenseId) => void;
 }
 
@@ -41,9 +36,9 @@ export const useExpensesStore = create<ExpensesState>((set) => ({
         set({ loadingExpensesStore: false });
       });
   },
-  createExpenseStore: (date, description, amount, category) => {
+  createExpenseStore: ({ id, date, description, amount, category }) => {
     const expense = {
-      id: crypto.randomUUID(),
+      id,
       date,
       description,
       amount,
