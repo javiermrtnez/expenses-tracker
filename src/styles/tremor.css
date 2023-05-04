@@ -1,3 +1,8 @@
 .tremor-TableCell-root {
     padding: 0.25rem 1rem;
 }
+
+.tremor-Dropdown-root,
+.tremor-TextInput-root {
+    min-width: 0;
+}
