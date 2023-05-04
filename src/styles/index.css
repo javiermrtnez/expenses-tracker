@@ -19,3 +19,43 @@ body {
   min-width: 320px;
   min-height: 100vh; */
 }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}
