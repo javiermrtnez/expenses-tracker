@@ -9,6 +9,11 @@ import {
   ExpenseId,
 } from '../utils/interfaces/expense.interface';
 import { Timestamp } from 'firebase/firestore';
+import {
+  getFullYearFromTimestamp,
+  getMonthFromTimestamp,
+  getTimeFromTimestamp,
+} from '../utils/functions/converters';
 
 const useExpenses = () => {
   const expenses = useExpensesStore((state) => state.expenses);
@@ -55,45 +60,40 @@ const useExpenses = () => {
       });
   };
 
-  const sumAmountExpenses = useMemo(
-    () => expenses.reduce((acc, curr) => acc + curr.amount, 0),
+  const sumAmountExpenses = useCallback(
+    (year: number, month: number) =>
+      expenses
+        .filter(
+          (value) =>
+            getMonthFromTimestamp(value.date) === month &&
+            getFullYearFromTimestamp(value.date) === year
+        )
+        .reduce((acc, curr) => acc + curr.amount, 0),
     [expenses]
   );
 
-  const fromTimestampToFormattedDate = (date: Timestamp) => {
-    const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
-      day: 'numeric',
-      month: 'short',
-    };
+  const getDailyExpenses = useCallback(
+    (year: number, month: number) => {
+      const expensesByDay = [];
 
-    return date.toDate().toLocaleDateString('es-ES', DATE_OPTIONS);
-  };
+      const normalizedExpenses = expenses
+        .map((expense) => ({
+          amount: expense.amount,
+          date: expense.date,
+        }))
+        .filter(
+          (value) =>
+            getMonthFromTimestamp(value.date) === month &&
+            getFullYearFromTimestamp(value.date) === year
+        );
 
-  const fromDateToFormattedDate = (date: Date) => {
-    const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
-      day: 'numeric',
-      month: 'short',
-    };
-
-    return date.toLocaleDateString('es-ES', DATE_OPTIONS);
-  };
-
-  const normalizedExpenses = useMemo(
-    () =>
-      expenses.map((expense) => ({
-        amount: expense.amount,
-        date: fromTimestampToFormattedDate(expense.date),
-      })),
-    [expenses]
-  );
-
-  const expensesGroupedByDay = useMemo(
-    () =>
-      normalizedExpenses.reduce((accExpenses, transaction) => {
+      const expensesGroupedByDay = normalizedExpenses.reduce((accExpenses, transaction) => {
         const { date, amount } = transaction;
 
         // Find an existing object in the accumulator with the same date
-        const existingObject = accExpenses.find((obj) => obj.date === date);
+        const existingObject = accExpenses.find(
+          (obj) => getTimeFromTimestamp(obj.date) === getTimeFromTimestamp(date)
+        );
 
         if (existingObject) {
           existingObject.amount += amount;
@@ -103,37 +103,38 @@ const useExpenses = () => {
         }
 
         return accExpenses;
-      }, []),
-    [normalizedExpenses]
-  );
+      }, []);
 
-  const getExpensesByDay = useCallback(() => {
-    const datesArray = [];
+      // Create a new Date object for the first day of the month
+      const startDate = new Date(year, month, 1);
+      // Create a new Date object for the last day of the month
+      const endDate = new Date(year, month + 1, 0);
 
-    const startDate = new Date(2023, 4, 1); // May 1st, 2023
-    const endDate = new Date(2023, 4, 31); // May 31st, 2023
+      for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+        const formattedDate = Timestamp.fromDate(new Date(date));
 
-    for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
-      datesArray.push(fromDateToFormattedDate(new Date(date)));
-    }
+        const index = expensesGroupedByDay.findIndex(
+          (expense) => getTimeFromTimestamp(expense.date) === getTimeFromTimestamp(formattedDate)
+        );
 
-    return datesArray.map((date) => {
-      const index = expensesGroupedByDay.findIndex((expense) => expense.date === date);
-
-      if (index >= 0) {
-        return expensesGroupedByDay[index];
-      } else {
-        return { date, amount: 0 };
+        if (index >= 0) {
+          expensesByDay.push(expensesGroupedByDay[index]);
+        } else {
+          expensesByDay.push({ date: formattedDate, amount: 0 });
+        }
       }
-    });
-  }, [expensesGroupedByDay]);
+
+      return expensesByDay;
+    },
+    [expenses]
+  );
 
   return {
     loadingExpensesStore,
     loading,
     expenses,
-    expensesByDay: getExpensesByDay(),
     sumAmountExpenses,
+    getDailyExpenses,
     createExpense,
     deleteExpense,
   };

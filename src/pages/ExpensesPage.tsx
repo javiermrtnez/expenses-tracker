@@ -43,54 +43,54 @@ const ExpensesPage = () => {
       </Grid>
 
       <Card>
-        <Flex justifyContent='start' className='space-x-2'>
-          <Title>Gastos</Title>
-          <Badge size='md' color='gray'>
-            {expenses.length}
-          </Badge>
-        </Flex>
+        {!loadingExpensesStore ? (
+          <>
+            <Flex justifyContent='start' className='space-x-2'>
+              <Title>Gastos</Title>
+              <Badge size='md' color='gray'>
+                {expenses.length}
+              </Badge>
+            </Flex>
 
-        <Text className='mt-2'>Resumen de los gastos de este mes</Text>
+            <Text className='mt-2'>Resumen de los gastos de este mes</Text>
 
-        <Table className='mt-6'>
-          <TableHead>
-            <TableRow>
-              <TableHeaderCell>Date</TableHeaderCell>
-              <TableHeaderCell>Description</TableHeaderCell>
-              <TableHeaderCell>Amount</TableHeaderCell>
-              <TableHeaderCell>Category</TableHeaderCell>
-              <TableHeaderCell>Acciones</TableHeaderCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {!loadingExpensesStore ? (
-              expenses.map(({ id, date, amount, description, category }) => (
-                <TableRow key={id}>
-                  <TableCell>{date.toDate().toLocaleString('es', DATE_OPTIONS)}</TableCell>
-                  <TableCell>{description}</TableCell>
-                  <TableCell>{amountFormatter(amount)}</TableCell>
-                  <TableCell>
-                    <Badge color='gray' size='xl'>
-                      {EXPENSES_CATEGORIES[category]}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      color='gray'
-                      className='[&>svg]:m-0'
-                      variant='light'
-                      icon={XMarkIcon}
-                      onClick={() => deleteExpense(id)}
-                    />
-                  </TableCell>
+            <Table className='mt-6'>
+              <TableHead>
+                <TableRow>
+                  <TableHeaderCell>Fecha</TableHeaderCell>
+                  <TableHeaderCell>Descripción</TableHeaderCell>
+                  <TableHeaderCell>Cantidad</TableHeaderCell>
+                  <TableHeaderCell>Categoría</TableHeaderCell>
+                  <TableHeaderCell>Acciones</TableHeaderCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableSkeleton rows={10} columns={4} />
-            )}
-          </TableBody>
-        </Table>
+              </TableHead>
+
+              <TableBody>
+                {expenses.map(({ id, date, amount, description, category }) => (
+                  <TableRow key={id}>
+                    <TableCell>{date.toDate().toLocaleString('es', DATE_OPTIONS)}</TableCell>
+                    <TableCell>{description}</TableCell>
+                    <TableCell>{amountFormatter(amount)}</TableCell>
+                    <TableCell>
+                      <Badge color='gray'>{EXPENSES_CATEGORIES[category]}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        color='gray'
+                        className='[&>svg]:m-0'
+                        variant='light'
+                        icon={XMarkIcon}
+                        onClick={() => deleteExpense(id)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </>
+        ) : (
+          <TableSkeleton rows={10} />
+        )}
       </Card>
     </div>
   );
