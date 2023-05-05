@@ -1,12 +1,5 @@
 import { create } from 'zustand';
-import {
-  Expense,
-  ExpenseAmount,
-  ExpenseCategory,
-  ExpenseDate,
-  ExpenseDescription,
-  ExpenseId,
-} from '../utils/interfaces/expense.interface';
+import { Expense, ExpenseId } from '../utils/interfaces/expense.interface';
 import * as expensesService from '../services/expenses.service';
 
 interface ExpensesState {

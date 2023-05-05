@@ -1,13 +1,13 @@
 import { Timestamp } from 'firebase/firestore';
 
-export const getTimeFromTimestamp = (date: Timestamp) => {
-  return date.toDate().getTime();
+export const getTimeFromTimestamp = (timestamp: Timestamp) => {
+  return timestamp.toDate().getTime();
 };
 
-export const getMonthFromTimestamp = (date: Timestamp) => {
-  return date.toDate().getMonth();
+export const getMonthFromTimestamp = (timestamp: Timestamp) => {
+  return timestamp.toDate().getMonth();
 };
 
-export const getFullYearFromTimestamp = (date: Timestamp) => {
-  return date.toDate().getFullYear();
+export const getFullYearFromTimestamp = (timestamp: Timestamp) => {
+  return timestamp.toDate().getFullYear();
 };

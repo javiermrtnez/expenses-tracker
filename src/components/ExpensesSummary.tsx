@@ -1,4 +1,4 @@
-import { Bold, Button, Card, Metric, Tab, TabList, Text, Title } from '@tremor/react';
+import { Card, Metric, Tab, TabList, Text } from '@tremor/react';
 import useExpenses from '../hooks/useExpenses';
 import { useState } from 'react';
 import ExpensesByDay from './ExpensesByDay';
@@ -6,7 +6,6 @@ import ExpensesByCategory from './ExpensesByCategory';
 import { amountFormatter } from '../utils/functions/formatters';
 import { CalendarDaysIcon, TagIcon } from '@heroicons/react/20/solid';
 import ExpensesSummarySkeleton from './skeletons/ExpensesSummarySkeleton';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 const TABS_LIST = {
   BY_DAY: {
