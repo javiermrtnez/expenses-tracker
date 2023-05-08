@@ -12,14 +12,6 @@
   --logo-gradient: linear-gradient(to bottom right, #10b981, #eab308)
 }
 
-body {
-  /* margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh; */
-}
-
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
