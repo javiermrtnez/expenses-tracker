@@ -20,6 +20,9 @@ const useExpenses = () => {
   const createExpenseStore = useExpensesStore((state) => state.createExpenseStore);
   const loadingExpensesStore = useExpensesStore((state) => state.loadingExpensesStore);
   const deleteExpenseStore = useExpensesStore((state) => state.deleteExpenseStore);
+  const monthYearFilter = useExpensesStore((state) => state.monthYearFilter);
+  const setMonthYearFilter = useExpensesStore((state) => state.setMonthYearFilter);
+  const resetMonthYearFilter = useExpensesStore((state) => state.resetMonthYearFilter);
   const [loading, setLoading] = useState(false);
 
   const createExpense = (
@@ -60,32 +63,32 @@ const useExpenses = () => {
       });
   };
 
-  const sumAmountExpenses = useCallback(
-    (year: number, month: number) =>
+  const getMonthExpenses = useCallback(
+    (month: number, year: number) =>
       expenses
         .filter(
           (value) =>
             getMonthFromTimestamp(value.date) === month &&
             getFullYearFromTimestamp(value.date) === year
         )
-        .reduce((acc, curr) => acc + curr.amount, 0),
+        .sort((a, b) => b.date.toMillis() - a.date.toMillis()),
     [expenses]
   );
 
+  const sumAmountExpenses = useCallback(
+    (month: number, year: number) =>
+      getMonthExpenses(month, year).reduce((acc, curr) => acc + curr.amount, 0),
+    [getMonthExpenses]
+  );
+
   const getDailyExpenses = useCallback(
-    (year: number, month: number) => {
+    (month: number, year: number) => {
       const expensesByDay = [];
 
-      const normalizedExpenses = expenses
-        .map((expense) => ({
-          amount: expense.amount,
-          date: expense.date,
-        }))
-        .filter(
-          (value) =>
-            getMonthFromTimestamp(value.date) === month &&
-            getFullYearFromTimestamp(value.date) === year
-        );
+      const normalizedExpenses = getMonthExpenses(month, year).map((expense) => ({
+        amount: expense.amount,
+        date: expense.date,
+      }));
 
       const expensesGroupedByDay = normalizedExpenses.reduce((accExpenses, transaction) => {
         const { date, amount } = transaction;
@@ -126,17 +129,20 @@ const useExpenses = () => {
 
       return expensesByDay;
     },
-    [expenses]
+    [getMonthExpenses]
   );
 
   return {
     loadingExpensesStore,
     loading,
-    expenses,
+    monthYearFilter,
+    getMonthExpenses,
     sumAmountExpenses,
     getDailyExpenses,
     createExpense,
     deleteExpense,
+    setMonthYearFilter,
+    resetMonthYearFilter,
   };
 };
 

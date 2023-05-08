@@ -3,12 +3,14 @@ import useExpenses from '../hooks/useExpenses';
 import { amountFormatter, fromTimestampToFormattedDate } from '../utils/functions/formatters';
 
 const ExpensesByDay = () => {
-  const { getDailyExpenses } = useExpenses();
+  const { monthYearFilter, getDailyExpenses } = useExpenses();
 
-  const expensesByDayFormatted = getDailyExpenses(2023, 4).map((expense) => ({
-    Cantidad: expense.amount,
-    date: fromTimestampToFormattedDate(expense.date),
-  }));
+  const expensesByDayFormatted = getDailyExpenses(monthYearFilter.month, monthYearFilter.year).map(
+    (expense) => ({
+      Cantidad: expense.amount,
+      date: fromTimestampToFormattedDate(expense.date),
+    })
+  );
 
   return (
     <AreaChart

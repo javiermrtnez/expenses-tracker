@@ -1,37 +1,94 @@
-import { Button, Grid } from '@tremor/react';
-import {
-  Card,
-  Text,
-  Title,
-  Flex,
-  Table,
-  TableRow,
-  TableCell,
-  TableHead,
-  TableHeaderCell,
-  TableBody,
-  Badge,
-} from '@tremor/react';
-import useExpenses from '../hooks/useExpenses';
-import TableSkeleton from '../components/skeletons/TableSkeleton';
+import { Button, Grid, Icon, Title } from '@tremor/react';
 import { Col } from '@tremor/react';
-import { EXPENSES_CATEGORIES } from '../utils/constants/expensesCategories';
 import AddExpenseCard from '../components/AddExpenseCard';
-import { XMarkIcon } from '@heroicons/react/24/solid';
 import ExpensesSummary from '../components/ExpensesSummary';
-import { amountFormatter } from '../utils/functions/formatters';
+import ExpensesTableCard from '../components/ExpensesTableCard';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import useExpenses from '../hooks/useExpenses';
+import { useMemo } from 'react';
+
+const MONTH_YEAR_FILTER_ACTIONS = {
+  NEXT: 'next',
+  PREVIOUS: 'previous',
+};
 
 const ExpensesPage = () => {
-  const { loadingExpensesStore, expenses, deleteExpense } = useExpenses();
+  const { monthYearFilter, setMonthYearFilter, resetMonthYearFilter } = useExpenses();
 
   const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
-    day: '2-digit',
-    month: '2-digit',
+    month: 'long',
     year: 'numeric',
   };
 
+  const todayMonthYear = new Date(monthYearFilter.year, monthYearFilter.month, 1)
+    .toLocaleDateString('es-ES', DATE_OPTIONS)
+    .replace(/^(\w)/, (match) => match.toUpperCase())
+    .replace(' de', '');
+
+  const updateMonthYear = (action: string) => () => {
+    const { month, year } = monthYearFilter;
+
+    const currentDate = new Date(year, month, 1); // Create a date object for the first day of the current month
+
+    if (action === MONTH_YEAR_FILTER_ACTIONS.NEXT) {
+      currentDate.setMonth(currentDate.getMonth() + 1); // Set the month to the next month
+    } else if (action === MONTH_YEAR_FILTER_ACTIONS.PREVIOUS) {
+      currentDate.setMonth(currentDate.getMonth() - 1); // Set the month to the previous month
+    }
+
+    const updatedMonth = currentDate.getMonth(); // Get the updated month (as a zero-based index)
+    const updatedYear = currentDate.getFullYear(); // Get the updated year
+
+    setMonthYearFilter({ month: updatedMonth, year: updatedYear });
+  };
+
+  const resetMonthYear = () => {
+    resetMonthYearFilter();
+  };
+
+  const disableNextButton = useMemo(() => {
+    const { month, year } = monthYearFilter;
+    const maxMonth = new Date().getMonth() + 1; // Maximum allowed month (actual month)
+    const maxYear = new Date().getFullYear(); // Maximum allowed year (actual year)
+
+    const currentDate = new Date(year, month, 1); // Create a date object for the first day of the current month
+    currentDate.setMonth(currentDate.getMonth() + 1); // Set the month to the next month
+    const nextMonth = currentDate.getMonth(); // Get the next month (as a zero-based index)
+    const nextYear = currentDate.getFullYear(); // Get the year for the next month
+
+    return nextYear > maxYear || (nextYear === maxYear && nextMonth >= maxMonth);
+  }, [monthYearFilter]);
+
   return (
     <div className='flex flex-col gap-6'>
+      <div className='flex gap-1 items-center justify-center'>
+        <button
+          className='rounded hover:bg-gray-200 transition-colors'
+          onClick={updateMonthYear(MONTH_YEAR_FILTER_ACTIONS.PREVIOUS)}
+        >
+          <Icon icon={ChevronLeftIcon} color='gray' />
+        </button>
+
+        <Title
+          className='leading-none cursor-pointer w-36 flex justify-center'
+          onClick={resetMonthYear}
+        >
+          {todayMonthYear}
+        </Title>
+
+        <button
+          className={!disableNextButton ? 'rounded hover:bg-gray-200 transition-colors' : ''}
+          onClick={updateMonthYear(MONTH_YEAR_FILTER_ACTIONS.NEXT)}
+          disabled={disableNextButton}
+        >
+          <Icon
+            icon={ChevronRightIcon}
+            color='gray'
+            className={disableNextButton ? 'text-gray-300' : ''}
+          />
+        </button>
+      </div>
+
       <Grid numColsLg={5} className='gap-6'>
         <Col numColSpanLg={2}>
           <AddExpenseCard />
@@ -42,56 +99,7 @@ const ExpensesPage = () => {
         </Col>
       </Grid>
 
-      <Card>
-        {!loadingExpensesStore ? (
-          <>
-            <Flex justifyContent='start' className='space-x-2'>
-              <Title>Gastos</Title>
-              <Badge size='md' color='gray'>
-                {expenses.length}
-              </Badge>
-            </Flex>
-
-            <Text className='mt-2'>Resumen de los gastos de este mes</Text>
-
-            <Table className='mt-6'>
-              <TableHead>
-                <TableRow>
-                  <TableHeaderCell>Fecha</TableHeaderCell>
-                  <TableHeaderCell>Descripción</TableHeaderCell>
-                  <TableHeaderCell>Cantidad</TableHeaderCell>
-                  <TableHeaderCell>Categoría</TableHeaderCell>
-                  <TableHeaderCell>Acciones</TableHeaderCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {expenses.map(({ id, date, amount, description, category }) => (
-                  <TableRow key={id}>
-                    <TableCell>{date.toDate().toLocaleString('es', DATE_OPTIONS)}</TableCell>
-                    <TableCell>{description}</TableCell>
-                    <TableCell>{amountFormatter(amount)}</TableCell>
-                    <TableCell>
-                      <Badge color='gray'>{EXPENSES_CATEGORIES[category]}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        color='gray'
-                        className='[&>svg]:m-0'
-                        variant='light'
-                        icon={XMarkIcon}
-                        onClick={() => deleteExpense(id)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </>
-        ) : (
-          <TableSkeleton rows={10} />
-        )}
-      </Card>
+      <ExpensesTableCard />
     </div>
   );
 };

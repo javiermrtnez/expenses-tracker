@@ -79,6 +79,7 @@ const AddExpenseCard = () => {
             onValueChange={handleDateChange}
             locale={es}
             enableDropdown={false}
+            maxDate={new Date()}
           />
         </div>
 

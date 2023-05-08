@@ -21,22 +21,14 @@ const TABS_LIST = {
 };
 
 const ExpensesSummary = () => {
+  const { monthYearFilter } = useExpenses();
+
   const { loadingExpensesStore, sumAmountExpenses } = useExpenses();
   const [selectedView, setSelectedView] = useState(TABS_LIST.BY_DAY.value);
 
   const handleTabListChange = (value: string) => {
     setSelectedView(value);
   };
-
-  //   const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
-  //     month: 'long',
-  //     year: 'numeric',
-  //   };
-
-  //   const todayMonthYear = new Date()
-  //     .toLocaleDateString('es-ES', DATE_OPTIONS)
-  //     .replace(/^(\w)/, (match) => match.toUpperCase())
-  //     .replace(' de', '');
 
   return (
     <Card className='h-full'>
@@ -46,30 +38,10 @@ const ExpensesSummary = () => {
             <div>
               <Text>Gasto mensual</Text>
 
-              <Metric>{amountFormatter(sumAmountExpenses(2023, 4))}</Metric>
+              <Metric>
+                {amountFormatter(sumAmountExpenses(monthYearFilter.month, monthYearFilter.year))}
+              </Metric>
             </div>
-
-            {/* <div className='flex gap-1 items-center'>
-              <Button
-                color='gray'
-                size='xs'
-                className='[&>svg]:m-0'
-                variant='light'
-                icon={ChevronLeftIcon}
-                onClick={() => {}}
-              />
-
-              <Bold className='leading-none'>{todayMonthYear}</Bold>
-
-              <Button
-                color='gray'
-                size='xs'
-                className='[&>svg]:m-0'
-                variant='light'
-                icon={ChevronRightIcon}
-                onClick={() => {}}
-              />
-            </div> */}
           </div>
 
           <TabList

@@ -29,7 +29,8 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenuOpen = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setIsMobileMenuOpen((prevState) => !prevState);
+
     document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : '';
   };
 
