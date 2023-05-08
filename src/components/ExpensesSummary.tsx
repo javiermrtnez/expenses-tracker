@@ -1,10 +1,10 @@
-import { Card, Metric, Tab, TabList, Text } from '@tremor/react';
+import { Card, Icon, Metric, Tab, TabList, Text } from '@tremor/react';
 import useExpenses from '../hooks/useExpenses';
 import { useState } from 'react';
 import ExpensesByDay from './ExpensesByDay';
 import ExpensesByCategory from './ExpensesByCategory';
 import { amountFormatter } from '../utils/functions/formatters';
-import { CalendarDaysIcon, TagIcon } from '@heroicons/react/20/solid';
+import { CalendarDaysIcon, EyeIcon, EyeSlashIcon, TagIcon } from '@heroicons/react/20/solid';
 import ExpensesSummarySkeleton from './skeletons/ExpensesSummarySkeleton';
 
 const TABS_LIST = {
@@ -21,13 +21,17 @@ const TABS_LIST = {
 };
 
 const ExpensesSummary = () => {
-  const { monthYearFilter } = useExpenses();
-
   const { loadingExpensesStore, sumAmountExpenses } = useExpenses();
+
   const [selectedView, setSelectedView] = useState(TABS_LIST.BY_DAY.value);
+  const [showAmount, setShowAmount] = useState(true);
 
   const handleTabListChange = (value: string) => {
     setSelectedView(value);
+  };
+
+  const toggleShowAmount = () => {
+    setShowAmount((prevState) => !prevState);
   };
 
   return (
@@ -38,10 +42,15 @@ const ExpensesSummary = () => {
             <div>
               <Text>Gasto mensual</Text>
 
-              <Metric>
-                {amountFormatter(sumAmountExpenses(monthYearFilter.month, monthYearFilter.year))}
-              </Metric>
+              <Metric>{showAmount ? amountFormatter(sumAmountExpenses) : '•••• €'}</Metric>
             </div>
+
+            <button
+              className='rounded hover:bg-gray-200 transition-colors h-full'
+              onClick={toggleShowAmount}
+            >
+              <Icon icon={showAmount ? EyeSlashIcon : EyeIcon} color='gray' />
+            </button>
           </div>
 
           <TabList

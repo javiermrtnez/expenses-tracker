@@ -19,15 +19,13 @@ import TableSkeleton from '../components/skeletons/TableSkeleton';
 import useExpenses from '../hooks/useExpenses';
 
 const ExpensesTableCard = () => {
-  const { loadingExpensesStore, monthYearFilter, getMonthExpenses, deleteExpense } = useExpenses();
+  const { loadingExpensesStore, monthExpenses, deleteExpense } = useExpenses();
 
   const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
   };
-
-  const expenses = getMonthExpenses(monthYearFilter.month, monthYearFilter.year);
 
   return (
     <Card>
@@ -36,7 +34,7 @@ const ExpensesTableCard = () => {
           <Flex justifyContent='start' className='space-x-2'>
             <Title>Gastos</Title>
             <Badge size='md' color='gray'>
-              {expenses.length}
+              {monthExpenses.length}
             </Badge>
           </Flex>
 
@@ -54,7 +52,7 @@ const ExpensesTableCard = () => {
             </TableHead>
 
             <TableBody>
-              {expenses.map(({ id, date, amount, description, category }) => (
+              {monthExpenses.map(({ id, date, amount, description, category }) => (
                 <TableRow key={id}>
                   <TableCell>{date.toDate().toLocaleString('es', DATE_OPTIONS)}</TableCell>
                   <TableCell>{description}</TableCell>

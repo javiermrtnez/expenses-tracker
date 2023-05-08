@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import * as expensesService from '../services/expenses.service';
 import { useExpensesStore } from '../store/expenses';
 import {
@@ -63,82 +63,129 @@ const useExpenses = () => {
       });
   };
 
-  const getMonthExpenses = useCallback(
-    (month: number, year: number) =>
-      expenses
-        .filter(
-          (value) =>
-            getMonthFromTimestamp(value.date) === month &&
-            getFullYearFromTimestamp(value.date) === year
-        )
-        .sort((a, b) => b.date.toMillis() - a.date.toMillis()),
-    [expenses]
-  );
+  const monthExpenses = useMemo(() => {
+    const { month, year } = monthYearFilter;
 
-  const sumAmountExpenses = useCallback(
-    (month: number, year: number) =>
-      getMonthExpenses(month, year).reduce((acc, curr) => acc + curr.amount, 0),
-    [getMonthExpenses]
-  );
+    return expenses
+      .filter(
+        (value) =>
+          getMonthFromTimestamp(value.date) === month &&
+          getFullYearFromTimestamp(value.date) === year
+      )
+      .sort((a, b) => b.date.toMillis() - a.date.toMillis());
+  }, [expenses, monthYearFilter]);
 
-  const getDailyExpenses = useCallback(
-    (month: number, year: number) => {
-      const expensesByDay = [];
+  const sumAmountExpenses = useMemo(() => {
+    return monthExpenses.reduce((acc, curr) => acc + curr.amount, 0);
+  }, [monthExpenses]);
 
-      const normalizedExpenses = getMonthExpenses(month, year).map((expense) => ({
-        amount: expense.amount,
-        date: expense.date,
-      }));
+  const monthExpensesByDay = useMemo(() => {
+    const { month, year } = monthYearFilter;
+    const expensesByDay = [];
 
-      const expensesGroupedByDay = normalizedExpenses.reduce((accExpenses, transaction) => {
-        const { date, amount } = transaction;
+    const normalizedExpenses = monthExpenses.map((expense) => ({
+      amount: expense.amount,
+      date: expense.date,
+    }));
 
-        // Find an existing object in the accumulator with the same date
-        const existingObject = accExpenses.find(
-          (obj) => getTimeFromTimestamp(obj.date) === getTimeFromTimestamp(date)
-        );
+    const expensesGroupedByDay = normalizedExpenses.reduce((accExpenses, transaction) => {
+      const { date, amount } = transaction;
 
-        if (existingObject) {
-          existingObject.amount += amount;
-        } else {
-          // Create a new object with the date and amount
-          accExpenses.push({ date, amount });
-        }
+      // Find an existing object in the accumulator with the same date
+      const existingObject = accExpenses.find(
+        (obj) => getTimeFromTimestamp(obj.date) === getTimeFromTimestamp(date)
+      );
 
-        return accExpenses;
-      }, []);
-
-      // Create a new Date object for the first day of the month
-      const startDate = new Date(year, month, 1);
-      // Create a new Date object for the last day of the month
-      const endDate = new Date(year, month + 1, 0);
-
-      for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
-        const formattedDate = Timestamp.fromDate(new Date(date));
-
-        const index = expensesGroupedByDay.findIndex(
-          (expense) => getTimeFromTimestamp(expense.date) === getTimeFromTimestamp(formattedDate)
-        );
-
-        if (index >= 0) {
-          expensesByDay.push(expensesGroupedByDay[index]);
-        } else {
-          expensesByDay.push({ date: formattedDate, amount: 0 });
-        }
+      if (existingObject) {
+        existingObject.amount += amount;
+      } else {
+        // Create a new object with the date and amount
+        accExpenses.push({ date, amount });
       }
 
-      return expensesByDay;
-    },
-    [getMonthExpenses]
-  );
+      return accExpenses;
+    }, []);
+
+    // Create a new Date object for the first day of the month
+    const startDate = new Date(year, month, 1);
+    // Create a new Date object for the last day of the month
+    const endDate = new Date(year, month + 1, 0);
+
+    for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+      const formattedDate = Timestamp.fromDate(new Date(date));
+
+      const index = expensesGroupedByDay.findIndex(
+        (expense) => getTimeFromTimestamp(expense.date) === getTimeFromTimestamp(formattedDate)
+      );
+
+      if (index >= 0) {
+        expensesByDay.push(expensesGroupedByDay[index]);
+      } else {
+        expensesByDay.push({ date: formattedDate, amount: 0 });
+      }
+    }
+
+    return expensesByDay;
+  }, [monthExpenses, monthYearFilter]);
+
+  // const monthExpensesByCategory = useCallback(
+  //   (month: number, year: number) => {
+  //     const expensesByDay = [];
+
+  //     const normalizedExpenses = monthExpenses(month, year).map((expense) => ({
+  //       amount: expense.amount,
+  //       date: expense.date,
+  //     }));
+
+  //     const expensesGroupedByDay = normalizedExpenses.reduce((accExpenses, transaction) => {
+  //       const { date, amount } = transaction;
+
+  //       // Find an existing object in the accumulator with the same date
+  //       const existingObject = accExpenses.find(
+  //         (obj) => getTimeFromTimestamp(obj.date) === getTimeFromTimestamp(date)
+  //       );
+
+  //       if (existingObject) {
+  //         existingObject.amount += amount;
+  //       } else {
+  //         // Create a new object with the date and amount
+  //         accExpenses.push({ date, amount });
+  //       }
+
+  //       return accExpenses;
+  //     }, []);
+
+  //     // Create a new Date object for the first day of the month
+  //     const startDate = new Date(year, month, 1);
+  //     // Create a new Date object for the last day of the month
+  //     const endDate = new Date(year, month + 1, 0);
+
+  //     for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+  //       const formattedDate = Timestamp.fromDate(new Date(date));
+
+  //       const index = expensesGroupedByDay.findIndex(
+  //         (expense) => getTimeFromTimestamp(expense.date) === getTimeFromTimestamp(formattedDate)
+  //       );
+
+  //       if (index >= 0) {
+  //         expensesByDay.push(expensesGroupedByDay[index]);
+  //       } else {
+  //         expensesByDay.push({ date: formattedDate, amount: 0 });
+  //       }
+  //     }
+
+  //     return expensesByDay;
+  //   },
+  //   [monthExpenses]
+  // );
 
   return {
     loadingExpensesStore,
     loading,
     monthYearFilter,
-    getMonthExpenses,
+    monthExpensesByDay,
+    monthExpenses,
     sumAmountExpenses,
-    getDailyExpenses,
     createExpense,
     deleteExpense,
     setMonthYearFilter,
