@@ -84,7 +84,7 @@ const Navbar = () => {
           {/* MOBILE MENU */}
           {isMobileMenuOpen && (
             <div
-              className='fixed z-10 p-[var(--page-padding)] left-0 right-0 bottom-0 top-[var(--navbar-height)] h-[calc(100vh-var(--navbar-height))] w-screen bg-white/80 backdrop-blur-2xl'
+              className='fixed z-10 p-[var(--page-padding)] left-0 right-0 bottom-0 top-[var(--navbar-height)] h-[calc(100vh-var(--navbar-height))] w-screen bg-white/95'
               onClick={toggleMobileMenuOpen}
             >
               <div
