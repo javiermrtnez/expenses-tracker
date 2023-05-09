@@ -16,7 +16,7 @@ const ExpensesByDay = () => {
       data={expensesByDayFormatted}
       categories={['Cantidad']}
       index='date'
-      colors={['indigo']}
+      colors={['blue']}
       valueFormatter={amountFormatter}
       showYAxis={false}
       showLegend={false}
