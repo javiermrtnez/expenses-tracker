@@ -42,7 +42,7 @@ const MonthYearFilter = () => {
     resetMonthYearFilter();
   };
 
-  const disableNextButton = useMemo(() => {
+  const isNextButtonDisabled = useMemo(() => {
     const { month, year } = monthYearFilter;
     const maxMonth = new Date().getMonth() + 1; // Maximum allowed month (actual month)
     const maxYear = new Date().getFullYear(); // Maximum allowed year (actual year)
@@ -72,14 +72,14 @@ const MonthYearFilter = () => {
       </Title>
 
       <button
-        className={!disableNextButton ? 'rounded hover:bg-gray-200 transition-colors' : ''}
+        className={!isNextButtonDisabled ? 'rounded hover:bg-gray-200 transition-colors' : ''}
         onClick={updateMonthYear(MONTH_YEAR_FILTER_ACTIONS.NEXT)}
-        disabled={disableNextButton}
+        disabled={isNextButtonDisabled}
       >
         <Icon
           icon={ChevronRightIcon}
           color='gray'
-          className={disableNextButton ? 'text-gray-300' : ''}
+          className={isNextButtonDisabled ? 'text-gray-300' : ''}
         />
       </button>
     </div>
