@@ -21,7 +21,7 @@ const TABS_LIST = {
 };
 
 const ExpensesSummary = () => {
-  const { loadingExpensesStore, sumAmountExpenses } = useExpenses();
+  const { loadingExpensesStore, monthExpensesTotalAmount } = useExpenses();
 
   const [selectedView, setSelectedView] = useState(TABS_LIST.BY_DAY.value);
   const [showAmount, setShowAmount] = useState(true);
@@ -42,7 +42,7 @@ const ExpensesSummary = () => {
             <div>
               <Text>Gasto mensual</Text>
 
-              <Metric>{showAmount ? amountFormatter(sumAmountExpenses) : '•••• €'}</Metric>
+              <Metric>{showAmount ? amountFormatter(monthExpensesTotalAmount) : '•••• €'}</Metric>
             </div>
 
             <button
