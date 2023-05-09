@@ -58,16 +58,9 @@ const ExpensesSummary = () => {
             onValueChange={handleTabListChange}
             className='mt-3'
           >
-            <Tab
-              value={TABS_LIST.BY_DAY.value}
-              icon={TABS_LIST.BY_DAY.icon}
-              text={TABS_LIST.BY_DAY.text}
-            />
-            <Tab
-              value={TABS_LIST.BY_CATEGORY.value}
-              icon={TABS_LIST.BY_CATEGORY.icon}
-              text={TABS_LIST.BY_CATEGORY.text}
-            />
+            {Object.values(TABS_LIST).map((tab) => (
+              <Tab value={tab.value} icon={tab.icon} text={tab.text} />
+            ))}
           </TabList>
 
           {selectedView === TABS_LIST.BY_DAY.value && <ExpensesByDay />}

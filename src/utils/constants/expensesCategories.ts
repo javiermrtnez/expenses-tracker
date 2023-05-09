@@ -1,4 +1,4 @@
-export const EXPENSES_CATEGORIES = {
+export const EXPENSES_CATEGORIES: Record<string, string> = {
   breakfast: 'Desayuno',
   lunch: 'Almuerzo',
   snack: 'Merienda',
