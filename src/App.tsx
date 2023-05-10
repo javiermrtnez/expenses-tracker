@@ -7,10 +7,12 @@ import Toaster from './components/Toaster';
 import { AuthProvider } from './context/AuthContext';
 import { AuthenticatedRoute, UnauthenticatedRoute } from './guards/AuthGuard';
 import NotFoundPage from './pages/NotFoundPage';
+import Modal from './components/Modal';
 
 function App() {
   return (
     <AuthProvider>
+      <Modal />
       <Toaster />
       <Routes>
         <Route element={<BaseLayout />}>
