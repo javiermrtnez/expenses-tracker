@@ -8,11 +8,11 @@ import {
   TextInput,
 } from '@tremor/react';
 import { useState } from 'react';
-import useExpenses from '../hooks/useExpenses';
 import { Timestamp } from 'firebase/firestore';
 import { es } from 'date-fns/locale';
-import { EXPENSES_CATEGORIES } from '../utils/constants/expensesCategories';
-import useModal from '../hooks/useModal';
+import useExpenses from '../../hooks/useExpenses';
+import useModal from '../../hooks/useModal';
+import { EXPENSES_CATEGORIES } from '../../utils/constants/expensesCategories';
 
 interface ExpenseFormData {
   date: DateRangePickerValue;
