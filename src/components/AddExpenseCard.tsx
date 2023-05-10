@@ -1,19 +1,18 @@
 import {
   Bold,
   Button,
-  Card,
   DateRangePicker,
   DateRangePickerValue,
   Dropdown,
   DropdownItem,
   TextInput,
-  Title,
 } from '@tremor/react';
 import { useState } from 'react';
 import useExpenses from '../hooks/useExpenses';
 import { Timestamp } from 'firebase/firestore';
 import { es } from 'date-fns/locale';
 import { EXPENSES_CATEGORIES } from '../utils/constants/expensesCategories';
+import useModal from '../hooks/useModal';
 
 interface ExpenseFormData {
   date: DateRangePickerValue;
@@ -31,6 +30,7 @@ const EXPENSES_DEFAULT_STATE: ExpenseFormData = {
 
 const AddExpenseCard = () => {
   const { createExpense } = useExpenses();
+  const { closeModal } = useModal();
   const [expenseFormData, setExpenseFormData] = useState<ExpenseFormData>(EXPENSES_DEFAULT_STATE);
 
   const handleDateChange = (value: DateRangePickerValue) => {
@@ -64,14 +64,12 @@ const AddExpenseCard = () => {
       expenseFormData.category
     );
 
-    setExpenseFormData(EXPENSES_DEFAULT_STATE);
+    closeModal();
   };
 
   return (
-    <Card className='flex flex-col gap-3 h-full'>
-      <Title>Añadir gasto</Title>
-
-      <form className='flex flex-col gap-2 h-full' onSubmit={handleFormSubmit}>
+    <form className='flex flex-col gap-7' onSubmit={handleFormSubmit}>
+      <div className='flex flex-col gap-2'>
         <div className='flex flex-col gap-1 w-full'>
           <Bold>Fecha</Bold>
           <DateRangePicker
@@ -111,18 +109,18 @@ const AddExpenseCard = () => {
             </Dropdown>
           </div>
         </div>
+      </div>
 
-        <Button
-          className='w-full mt-auto'
-          color='gray'
-          disabled={
-            !expenseFormData.amount || !expenseFormData.category || !expenseFormData.description
-          }
-        >
-          Añadir
-        </Button>
-      </form>
-    </Card>
+      <Button
+        className='w-full'
+        color='gray'
+        disabled={
+          !expenseFormData.amount || !expenseFormData.category || !expenseFormData.description
+        }
+      >
+        Añadir
+      </Button>
+    </form>
   );
 };
 
