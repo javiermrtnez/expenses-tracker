@@ -59,7 +59,7 @@ const ExpensesSummary = () => {
             className='mt-3'
           >
             {Object.values(TABS_LIST).map((tab) => (
-              <Tab value={tab.value} icon={tab.icon} text={tab.text} />
+              <Tab key={tab.value} value={tab.value} icon={tab.icon} text={tab.text} />
             ))}
           </TabList>
 
