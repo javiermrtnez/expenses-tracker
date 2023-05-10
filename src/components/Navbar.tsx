@@ -40,7 +40,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className='sticky top-0 flex w-full z-50 h-[var(--navbar-height)] bg-white bg-opacity-50 shadow-sm backdrop-blur'>
+    <header className='sticky top-0 flex w-full z-10 h-[var(--navbar-height)] bg-white bg-opacity-50 shadow-sm backdrop-blur'>
       <div className='flex gap-3 items-center justify-between w-[var(--page-width-with-padding)] m-auto px-[var(--page-padding)]'>
         <div className='flex flex-1 justify-start'>
           <Logo />
@@ -74,7 +74,7 @@ const Navbar = () => {
           <button onClick={toggleMobileMenuOpen} className='transition-transform w-6 h-10'>
             <div
               className={joinClassNames(
-                'w-full h-full flex flex-col pointer-events-none justify-center items-center before:block before:rounded before:h-0.5 before:w-5 before:bg-black before:transition-transform after:block after:rounded after:h-0.5 after:w-5 after:bg-black after:transition-transform',
+                'w-full h-full flex flex-col pointer-events-none justify-center items-center before:block before:rounded before:h-px before:w-5 before:bg-black before:transition-transform after:block after:rounded after:h-px after:w-5 after:bg-black after:transition-transform',
                 isMobileMenuOpen
                   ? 'before:translate-y-px before:rotate-45 after:translate-y-0 after:-rotate-45'
                   : 'before:-translate-y-1 before:rotate-0 after:translate-y-1 after:rotate-0'
