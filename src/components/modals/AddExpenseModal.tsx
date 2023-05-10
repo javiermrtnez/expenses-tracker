@@ -28,7 +28,7 @@ const EXPENSES_DEFAULT_STATE: ExpenseFormData = {
   category: '',
 };
 
-const AddExpenseCard = () => {
+const AddExpenseModal = () => {
   const { createExpense } = useExpenses();
   const { closeModal } = useModal();
   const [expenseFormData, setExpenseFormData] = useState<ExpenseFormData>(EXPENSES_DEFAULT_STATE);
@@ -124,4 +124,4 @@ const AddExpenseCard = () => {
   );
 };
 
-export default AddExpenseCard;
+export default AddExpenseModal;

@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import ModalLayout from '../layouts/ModalLayout';
-import { MODAL_CODES } from '../utils/constants/modalCodes';
-import useModal from '../hooks/useModal';
-import AddExpenseCard from './AddExpenseCard';
+import ModalLayout from '../../layouts/ModalLayout';
+import { MODAL_CODES } from '../../utils/constants/modalCodes';
+import useModal from '../../hooks/useModal';
+import AddExpenseModal from './AddExpenseModal';
 
 const MODALS = {
   [MODAL_CODES.ADD_EXPENSE]: {
     title: 'Añadir gasto',
-    modal: <AddExpenseCard />,
+    modal: <AddExpenseModal />,
   },
 };
 

@@ -7,7 +7,7 @@ import Toaster from './components/Toaster';
 import { AuthProvider } from './context/AuthContext';
 import { AuthenticatedRoute, UnauthenticatedRoute } from './guards/AuthGuard';
 import NotFoundPage from './pages/NotFoundPage';
-import Modal from './components/Modal';
+import Modal from './components/modals/Modal';
 
 function App() {
   return (
