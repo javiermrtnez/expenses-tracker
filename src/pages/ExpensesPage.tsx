@@ -16,8 +16,9 @@ const ExpensesPage = () => {
 
         <Button
           className='w-full sm:w-fit transition-colors'
-          icon={PlusIcon}
+          size='xs'
           color='slate'
+          icon={PlusIcon}
           onClick={() => showModal(MODAL_CODES.ADD_EXPENSE)}
         >
           Añadir gasto
