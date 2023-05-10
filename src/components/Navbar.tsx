@@ -52,7 +52,7 @@ const Navbar = () => {
               <li key={name} className='flex content-center items-center'>
                 <Link
                   className={joinClassNames(
-                    'py-2 px-3 text-gray-600 text-sm rounded-full leading-none hover:text-gray-950 hover:bg-gray-100 transition-colors',
+                    'py-2 px-3 text-gray-600 text-sm rounded-md leading-none hover:text-gray-950 hover:bg-gray-100 transition-colors',
                     pathname === to
                       ? ' bg-gray-200 hover:bg-gray-200 text-gray-950 font-medium'
                       : ''
@@ -89,7 +89,7 @@ const Navbar = () => {
               onClick={toggleMobileMenuOpen}
             >
               <div
-                className='w-full flex flex-col gap-6 rounded-3xl border border-gray-100 bg-white p-5 shadow-md'
+                className='w-full flex flex-col gap-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-md'
                 onClick={(e) => e.stopPropagation()}
               >
                 {user && (
@@ -98,7 +98,7 @@ const Navbar = () => {
                       <li key={name} className='flex content-center items-center'>
                         <button
                           className={joinClassNames(
-                            'py-2 px-3 text-gray-600 w-full text-sm text-left rounded-full leading-none hover:text-gray-950 hover:bg-gray-100 transition-colors',
+                            'py-2 px-3 text-gray-600 w-full text-sm text-left rounded-md leading-none hover:text-gray-950 hover:bg-gray-100 transition-colors',
                             pathname === to
                               ? ' bg-gray-200 hover:bg-gray-200 text-gray-950 font-medium'
                               : ''
