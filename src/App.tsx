@@ -17,13 +17,13 @@ function App() {
       <Routes>
         <Route element={<BaseLayout />}>
           <Route element={<AuthenticatedRoute />}>
-            <Route path='/' element={<SummaryPage />} />
+            <Route path='/dashboard' element={<SummaryPage />} />
             <Route path='/income' element={<div>Income page</div>} />
             <Route path='/expenses' element={<ExpensesPage />} />
           </Route>
 
           <Route element={<UnauthenticatedRoute />}>
-            <Route path='/login' element={<LogInPage />} />
+            <Route path='/' element={<></>} />
           </Route>
 
           <Route path='*' element={<NotFoundPage />} />

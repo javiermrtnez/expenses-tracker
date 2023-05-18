@@ -9,7 +9,7 @@ import { useState } from 'react';
 const NAVIGATION = [
   {
     name: 'Resumen',
-    to: '/',
+    to: '/dashboard',
   },
   {
     name: 'Ingresos',

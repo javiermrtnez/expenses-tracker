@@ -1,7 +1,7 @@
 export const GoogleIcon = () => {
   return (
     <svg
-      className='w-4 h-4'
+      className='w-3.5 h-3.5'
       width='256'
       height='262'
       xmlns='http://www.w3.org/2000/svg'

@@ -24,7 +24,7 @@ const useAuth = () => {
         await saveNewUser(userCredential);
 
         notificationSuccess('¡Has iniciado sesión con éxito!');
-        navigate('/');
+        navigate('/dashboard');
       })
       .catch((e) => {
         notificationError(
@@ -38,7 +38,7 @@ const useAuth = () => {
     authService
       .logOut()
       .then(() => {
-        navigate('/login');
+        navigate('/');
       })
       .catch((e) => {
         console.log(e.message);
