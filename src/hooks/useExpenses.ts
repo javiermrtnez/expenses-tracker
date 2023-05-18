@@ -7,6 +7,7 @@ import {
   ExpenseDate,
   ExpenseDescription,
   ExpenseId,
+  ExpenseWithoutId,
 } from '../utils/interfaces/expense.interface';
 import { Timestamp } from 'firebase/firestore';
 import {
@@ -34,15 +35,11 @@ const useExpenses = () => {
   const { monthYearFilter } = useFilters();
   const [loading, setLoading] = useState(false);
 
-  const createExpense = (
-    date: ExpenseDate,
-    description: ExpenseDescription,
-    amount: ExpenseAmount,
-    category: ExpenseCategory
-  ) => {
+  const createExpense = ({ date, description, amount, category }: ExpenseWithoutId) => {
     setLoading(true);
 
     const id = crypto.randomUUID();
+
     expensesService
       .createExpense({ id, date, description, amount, category })
       .then(() => {

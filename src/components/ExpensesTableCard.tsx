@@ -14,7 +14,7 @@ import {
 } from '@tremor/react';
 import { amountFormatter } from '../utils/functions/formatters';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { EXPENSES_CATEGORIES } from '../utils/constants/expensesCategories';
+import { EXPENSES_CATEGORIES } from '../utils/constants/categories';
 import TableSkeleton from '../components/skeletons/TableSkeleton';
 import useExpenses from '../hooks/useExpenses';
 

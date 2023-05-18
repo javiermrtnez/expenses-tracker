@@ -2,13 +2,12 @@ import { Routes, Route } from 'react-router-dom';
 import BaseLayout from './layouts/BaseLayout';
 import ExpensesPage from './pages/ExpensesPage';
 import SummaryPage from './pages/SummaryPage';
-import LogInPage from './pages/LogInPage';
 import Toaster from './components/Toaster';
 import { AuthProvider } from './context/AuthContext';
 import { AuthenticatedRoute, UnauthenticatedRoute } from './guards/AuthGuard';
 import NotFoundPage from './pages/NotFoundPage';
 import Modal from './components/modals/Modal';
-import IncomePage from './pages/IncomePage';
+import IncomesPage from './pages/IncomesPage';
 
 function App() {
   return (
@@ -19,7 +18,7 @@ function App() {
         <Route element={<BaseLayout />}>
           <Route element={<AuthenticatedRoute />}>
             <Route path='/dashboard' element={<SummaryPage />} />
-            <Route path='/income' element={<IncomePage />} />
+            <Route path='/income' element={<IncomesPage />} />
             <Route path='/expenses' element={<ExpensesPage />} />
           </Route>
 

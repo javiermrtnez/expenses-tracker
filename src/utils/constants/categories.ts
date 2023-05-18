@@ -9,3 +9,9 @@ export const EXPENSES_CATEGORIES: Record<string, string> = {
   travel: 'Viajes',
   others: 'Otros',
 };
+
+export const INCOMES_CATEGORIES: Record<string, string> = {
+  payroll: 'Nómina',
+  webMaintenance: 'Mantenimiento web',
+  others: 'Otros',
+};

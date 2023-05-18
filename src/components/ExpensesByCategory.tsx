@@ -1,6 +1,6 @@
 import { List, ListItem, ProgressBar, Text } from '@tremor/react';
 import useExpenses from '../hooks/useExpenses';
-import { EXPENSES_CATEGORIES } from '../utils/constants/expensesCategories';
+import { EXPENSES_CATEGORIES } from '../utils/constants/categories';
 import { amountFormatter } from '../utils/functions/formatters';
 
 const ExpensesByCategory = () => {

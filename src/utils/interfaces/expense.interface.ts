@@ -13,3 +13,5 @@ export interface Expense {
   amount: ExpenseAmount;
   category: ExpenseCategory;
 }
+
+export type ExpenseWithoutId = Omit<Expense, 'id'>;
