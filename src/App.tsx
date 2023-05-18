@@ -8,6 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import { AuthenticatedRoute, UnauthenticatedRoute } from './guards/AuthGuard';
 import NotFoundPage from './pages/NotFoundPage';
 import Modal from './components/modals/Modal';
+import IncomePage from './pages/IncomePage';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route element={<BaseLayout />}>
           <Route element={<AuthenticatedRoute />}>
             <Route path='/dashboard' element={<SummaryPage />} />
-            <Route path='/income' element={<div>Income page</div>} />
+            <Route path='/income' element={<IncomePage />} />
             <Route path='/expenses' element={<ExpensesPage />} />
           </Route>
 

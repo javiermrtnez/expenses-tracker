@@ -4,7 +4,7 @@ import ExpensesTableCard from '../components/ExpensesTableCard';
 import MonthYearFilter from '../components/MonthYearFilter';
 import useModal from '../hooks/useModal';
 import { MODAL_CODES } from '../utils/constants/modalCodes';
-import { PlusIcon } from '@heroicons/react/24/solid';
+import AddTransactionButton from '../components/AddTransactionButton';
 
 const IncomePage = () => {
   const { showModal } = useModal();
@@ -14,15 +14,9 @@ const IncomePage = () => {
       <div className='flex gap-6 justify-center flex-wrap sm:justify-between'>
         <MonthYearFilter />
 
-        <Button
-          className='w-full sm:w-fit transition-colors'
-          size='xs'
-          color='slate'
-          icon={PlusIcon}
-          onClick={() => showModal(MODAL_CODES.ADD_EXPENSE)}
-        >
-          Añadir gasto
-        </Button>
+        <AddTransactionButton onClick={showModal(MODAL_CODES.ADD_EXPENSE)}>
+          Añadir ingreso
+        </AddTransactionButton>
       </div>
 
       <ExpensesSummary />

@@ -14,6 +14,7 @@ import {
   getMonthFromTimestamp,
   getTimeFromTimestamp,
 } from '../utils/functions/converters';
+import useFilters from './useFilters';
 
 interface ExpenseDateAmount {
   date: ExpenseDate;
@@ -30,9 +31,7 @@ const useExpenses = () => {
   const createExpenseStore = useExpensesStore((state) => state.createExpenseStore);
   const loadingExpensesStore = useExpensesStore((state) => state.loadingExpensesStore);
   const deleteExpenseStore = useExpensesStore((state) => state.deleteExpenseStore);
-  const monthYearFilter = useExpensesStore((state) => state.monthYearFilter);
-  const setMonthYearFilter = useExpensesStore((state) => state.setMonthYearFilter);
-  const resetMonthYearFilter = useExpensesStore((state) => state.resetMonthYearFilter);
+  const { monthYearFilter } = useFilters();
   const [loading, setLoading] = useState(false);
 
   const createExpense = (
@@ -172,15 +171,12 @@ const useExpenses = () => {
   return {
     loadingExpensesStore,
     loading,
-    monthYearFilter,
     monthExpenses,
     monthExpensesByDay,
     monthExpensesByCategory,
     monthExpensesTotalAmount,
     createExpense,
     deleteExpense,
-    setMonthYearFilter,
-    resetMonthYearFilter,
   };
 };
 

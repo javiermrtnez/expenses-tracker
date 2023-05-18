@@ -1,4 +1,4 @@
-import { useModalStore } from '../store/modal';
+import { ModalCode, useModalStore } from '../store/modal';
 
 const useModal = () => {
   const modalCode = useModalStore((state) => state.modalCode);
@@ -7,7 +7,7 @@ const useModal = () => {
 
   return {
     modalCode,
-    showModal,
+    showModal: (modalCode: ModalCode) => () => showModal(modalCode),
     closeModal,
   };
 };

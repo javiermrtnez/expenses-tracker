@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import useExpenses from '../hooks/useExpenses';
 import { useMemo } from 'react';
 import { Icon, Title } from '@tremor/react';
+import useFilters from '../hooks/useFilters';
 
 const MONTH_YEAR_FILTER_ACTIONS = {
   PREVIOUS: 'previous',
@@ -9,7 +9,7 @@ const MONTH_YEAR_FILTER_ACTIONS = {
 };
 
 const MonthYearFilter = () => {
-  const { monthYearFilter, setMonthYearFilter, resetMonthYearFilter } = useExpenses();
+  const { monthYearFilter, setMonthYearFilter, resetMonthYearFilter } = useFilters();
 
   const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
     month: 'long',
