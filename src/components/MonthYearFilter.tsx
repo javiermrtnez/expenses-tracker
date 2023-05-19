@@ -37,10 +37,6 @@ const MonthYearFilter = () => {
     setMonthYearFilter({ month: updatedMonth, year: updatedYear });
   };
 
-  const resetMonthYear = () => {
-    resetMonthYearFilter();
-  };
-
   const isNextButtonDisabled = () => {
     const { month, year } = monthYearFilter;
     const maxMonth = new Date().getMonth() + 1; // Maximum allowed month (actual month)
@@ -65,7 +61,7 @@ const MonthYearFilter = () => {
 
       <Title
         className='h-full min-h-[32px] leading-none cursor-pointer w-36 flex justify-center items-center rounded hover:bg-gray-200 transition-colors'
-        onClick={resetMonthYear}
+        onClick={resetMonthYearFilter}
       >
         {todayMonthYear}
       </Title>
