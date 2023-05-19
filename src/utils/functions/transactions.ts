@@ -29,38 +29,39 @@ export const getMonthTransactionsTotalAmount = (transactions: Transaction[]) => 
   return transactions.reduce((acc, curr) => acc + curr.amount, 0);
 };
 
-export const getMonthTransactionsByDay = (
-  transactions: Transaction[],
-  monthYearFilter: MonthYearFilter
-) => {
-  const { month, year } = monthYearFilter;
-  const transactionsByDay = [];
-
-  const normalizedTransactions = transactions.map((transaction) => ({
+const getNormalizedTransactions = (transactions: Transaction[]) => {
+  return transactions.map((transaction) => ({
     amount: transaction.amount,
     date: transaction.date,
   }));
+};
 
-  const transactionsGroupedByDay = normalizedTransactions.reduce(
-    (accTransactions: TransactionDateAmount[], transaction) => {
-      const { date, amount } = transaction;
+const getTransactionsGroupedByDay = (normalizedTransactions: TransactionDateAmount[]) => {
+  return normalizedTransactions.reduce((accTransactions: TransactionDateAmount[], transaction) => {
+    const { date, amount } = transaction;
 
-      // Find an existing object in the accumulator with the same date
-      const existingObject = accTransactions.find(
-        (obj) => getTimeFromTimestamp(obj.date) === getTimeFromTimestamp(date)
-      );
+    // Find an existing object in the accumulator with the same date
+    const existingObject = accTransactions.find(
+      (obj) => getTimeFromTimestamp(obj.date) === getTimeFromTimestamp(date)
+    );
 
-      if (existingObject) {
-        existingObject.amount += amount;
-      } else {
-        // Create a new object with the date and amount
-        accTransactions.push({ date, amount });
-      }
+    if (existingObject) {
+      existingObject.amount += amount;
+    } else {
+      // Create a new object with the date and amount
+      accTransactions.push({ date, amount });
+    }
 
-      return accTransactions;
-    },
-    []
-  );
+    return accTransactions;
+  }, []);
+};
+
+const populateEmptyTransactions = (
+  transactionsGroupedByDay: TransactionDateAmount[],
+  monthYearFilter: MonthYearFilter
+) => {
+  const { year, month } = monthYearFilter;
+  const transactionsByDay = [];
 
   // Create a new Date object for the first day of the month
   const startDate = new Date(year, month, 1);
@@ -83,6 +84,16 @@ export const getMonthTransactionsByDay = (
   }
 
   return transactionsByDay;
+};
+
+export const getMonthTransactionsByDay = (
+  transactions: Transaction[],
+  monthYearFilter: MonthYearFilter
+) => {
+  const normalizedTransactions = getNormalizedTransactions(transactions);
+  const transactionsGroupedByDay = getTransactionsGroupedByDay(normalizedTransactions);
+
+  return populateEmptyTransactions(transactionsGroupedByDay, monthYearFilter);
 };
 
 export const getMonthTransactionsByCategory = (transactions: Transaction[]) => {
