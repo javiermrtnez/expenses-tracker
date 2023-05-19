@@ -31,14 +31,14 @@ const DashboardPage = () => {
           <TransactionMetricCard
             title='Ingresos'
             icon={BanknotesIcon}
-            color='emerald'
+            color='indigo'
             value={amountFormatter(monthIncomesTotalAmount)}
             loading={loadingIncomesStore}
           />
           <TransactionMetricCard
             title='Gastos'
             icon={CreditCardIcon}
-            color='red'
+            color='fuchsia'
             value={amountFormatter(monthExpensesTotalAmount)}
             loading={loadingExpensesStore}
           />
