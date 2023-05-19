@@ -19,14 +19,14 @@ import { TRANSACTIONS } from '../../utils/constants/transactions';
 interface TransactionFormData {
   date: DateRangePickerValue;
   description: string;
-  amount: number;
+  amount: string;
   category: string;
 }
 
 const TRANSACTION_DEFAULT_STATE: TransactionFormData = {
   date: [new Date(), new Date()],
   description: '',
-  amount: 0,
+  amount: '',
   category: '',
 };
 
@@ -52,11 +52,38 @@ const AddTransactionModal = ({ transactionType }: Props) => {
   };
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTransactionFormData({ ...transactionFormData, amount: event.target.valueAsNumber });
+    setTransactionFormData({ ...transactionFormData, amount: event.target.value });
   };
 
   const handleCategoryChange = (value: string) => {
     setTransactionFormData({ ...transactionFormData, category: value });
+  };
+
+  const getRoundNumberWithTwoDecimals = (number: number) => {
+    return Math.round(number * 100) / 100;
+  };
+
+  const getInputNumber = (value: string) => {
+    // Replace commas with periods in the expression
+    let normalizedAmount = value.replace(/,/g, '.');
+
+    if (normalizedAmount.startsWith('=')) {
+      // Remove the "=" symbol from the formula
+      const inputExpression = normalizedAmount.substring(1);
+
+      // Create a function from the normalized expression
+      const computeInputExpression = new Function(`return ${inputExpression};`);
+
+      try {
+        // Evaluate the formula by invoking the function and replace normalizedAmout with the compute expression
+        normalizedAmount = computeInputExpression();
+      } catch (error) {
+        normalizedAmount = '';
+        console.error('Invalid formula:', error);
+      }
+    }
+
+    return getRoundNumberWithTwoDecimals(Number(normalizedAmount));
   };
 
   const handleFormSubmit = (event) => {
@@ -65,7 +92,7 @@ const AddTransactionModal = ({ transactionType }: Props) => {
     const transaction = {
       date: convertDateToTimestampWithoutTime(transactionFormData.date[0]),
       description: transactionFormData.description,
-      amount: transactionFormData.amount,
+      amount: getInputNumber(transactionFormData.amount),
       category: transactionFormData.category,
     };
 
@@ -101,7 +128,7 @@ const AddTransactionModal = ({ transactionType }: Props) => {
           <div className='flex flex-col gap-1 w-1/2'>
             <Bold>Importe</Bold>
             <TextInput
-              type='number'
+              type='text'
               value={transactionFormData.amount}
               onChange={handleAmountChange}
             />
