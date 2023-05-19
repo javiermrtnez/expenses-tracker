@@ -1,4 +1,4 @@
-const ExpensesSummarySkeleton = () => {
+const TransactionSummarySkeleton = () => {
   return (
     <div className='w-full p-4 animate-pulse'>
       <div className='h-2 w-20 bg-gray-200 rounded-full mb-2.5' />
@@ -18,4 +18,4 @@ const ExpensesSummarySkeleton = () => {
   );
 };
 
-export default ExpensesSummarySkeleton;
+export default TransactionSummarySkeleton;

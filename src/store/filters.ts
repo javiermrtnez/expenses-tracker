@@ -1,9 +1,5 @@
 import { create } from 'zustand';
-
-interface MonthYearFilter {
-  month: number;
-  year: number;
-}
+import { MonthYearFilter } from '../utils/interfaces/filter.interface';
 
 interface FiltersState {
   monthYearFilter: MonthYearFilter;

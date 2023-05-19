@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 import { auth, db } from '../firebase/config';
 import { FIREBASE_COLLECTIONS } from './firebaseCollections';
-import { Income, IncomeId } from '../utils/interfaces/income.interface';
+import { Transaction, TransactionId } from '../utils/interfaces/transaction.interface';
 
 /**
  * Get all user INCOMES from "users > incomes" collection
@@ -43,7 +43,7 @@ export const createIncome = async ({
   description,
   amount,
   category,
-}: Income): Promise<void> => {
+}: Transaction): Promise<void> => {
   const incomesRef = doc(
     db,
     FIREBASE_COLLECTIONS.USERS,
@@ -63,7 +63,7 @@ export const createIncome = async ({
 /**
  * Delete INCOME in "users > incomes" collection
  */
-export const deleteIncome = async (id: IncomeId): Promise<void> => {
+export const deleteIncome = async (id: TransactionId): Promise<void> => {
   const incomeRef = doc(
     db,
     FIREBASE_COLLECTIONS.USERS,

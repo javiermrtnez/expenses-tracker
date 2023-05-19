@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import * as incomesService from '../services/incomes.service';
-import { Income, IncomeId } from '../utils/interfaces/income.interface';
+import { Transaction, TransactionId } from '../utils/interfaces/transaction.interface';
 
 interface IncomesState {
   loadingIncomesStore: boolean;
-  incomes: Income[];
+  incomes: Transaction[];
   clearIncomesStore: () => void;
   fetchIncomesStore: () => Promise<void>;
-  createIncomeStore: ({ id, date, description, amount, category }: Income) => void;
-  deleteIncomeStore: (id: IncomeId) => void;
+  createIncomeStore: ({ id, date, description, amount, category }: Transaction) => void;
+  deleteIncomeStore: (id: TransactionId) => void;
 }
 
 export const useIncomesStore = create<IncomesState>((set) => ({

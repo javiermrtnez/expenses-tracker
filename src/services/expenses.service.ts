@@ -8,8 +8,8 @@ import {
   setDoc,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase/config';
-import { Expense, ExpenseId } from '../utils/interfaces/expense.interface';
 import { FIREBASE_COLLECTIONS } from './firebaseCollections';
+import { Transaction, TransactionId } from '../utils/interfaces/transaction.interface';
 
 /**
  * Get all user Expenses from "users > expenses" collection
@@ -43,7 +43,7 @@ export const createExpense = async ({
   description,
   amount,
   category,
-}: Expense): Promise<void> => {
+}: Transaction): Promise<void> => {
   const expensesRef = doc(
     db,
     FIREBASE_COLLECTIONS.USERS,
@@ -63,7 +63,7 @@ export const createExpense = async ({
 /**
  * Delete Expense in "users > expenses" collection
  */
-export const deleteExpense = async (id: ExpenseId): Promise<void> => {
+export const deleteExpense = async (id: TransactionId): Promise<void> => {
   const expenseRef = doc(
     db,
     FIREBASE_COLLECTIONS.USERS,

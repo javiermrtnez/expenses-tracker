@@ -1,12 +1,15 @@
-import ExpensesSummary from '../components/ExpensesSummary';
-import ExpensesTableCard from '../components/ExpensesTableCard';
+import TransactionsTableCard from '../components/TransactionsTableCard';
 import MonthYearFilter from '../components/MonthYearFilter';
 import useModal from '../hooks/useModal';
 import { MODAL_CODES } from '../utils/constants/modalCodes';
 import AddTransactionButton from '../components/AddTransactionButton';
+import TransactionSummary from '../components/TransactionSummary';
+import useExpenses from '../hooks/useExpenses';
+import { EXPENSES_CATEGORIES } from '../utils/constants/categories';
 
 const ExpensesPage = () => {
   const { showModal } = useModal();
+  const { loadingExpensesStore, monthExpenses, deleteExpense } = useExpenses();
 
   return (
     <div className='flex flex-col gap-6'>
@@ -18,9 +21,18 @@ const ExpensesPage = () => {
         </AddTransactionButton>
       </div>
 
-      <ExpensesSummary />
+      <TransactionSummary
+        loadingStore={loadingExpensesStore}
+        monthTransactions={monthExpenses}
+        categories={EXPENSES_CATEGORIES}
+      />
 
-      <ExpensesTableCard />
+      <TransactionsTableCard
+        loadingStore={loadingExpensesStore}
+        monthTransactions={monthExpenses}
+        categories={EXPENSES_CATEGORIES}
+        deleteTransaction={deleteExpense}
+      />
     </div>
   );
 };

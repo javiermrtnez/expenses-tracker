@@ -14,13 +14,22 @@ import {
 } from '@tremor/react';
 import { amountFormatter } from '../utils/functions/formatters';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { EXPENSES_CATEGORIES } from '../utils/constants/categories';
-import TableSkeleton from '../components/skeletons/TableSkeleton';
-import useExpenses from '../hooks/useExpenses';
+import TableSkeleton from './skeletons/TableSkeleton';
+import { Transaction, TransactionId } from '../utils/interfaces/transaction.interface';
 
-const ExpensesTableCard = () => {
-  const { loadingExpensesStore, monthExpenses, deleteExpense } = useExpenses();
+interface Props {
+  loadingStore: boolean;
+  monthTransactions: Transaction[];
+  categories: Record<string, string>;
+  deleteTransaction: (id: TransactionId) => void;
+}
 
+const TransactionsTableCard = ({
+  loadingStore,
+  monthTransactions,
+  categories,
+  deleteTransaction,
+}: Props) => {
   const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
     day: '2-digit',
     month: '2-digit',
@@ -29,12 +38,12 @@ const ExpensesTableCard = () => {
 
   return (
     <Card>
-      {!loadingExpensesStore ? (
+      {!loadingStore ? (
         <>
           <Flex justifyContent='start' className='space-x-2'>
             <Title>Gastos</Title>
             <Badge size='md' color='gray'>
-              {monthExpenses.length}
+              {monthTransactions.length}
             </Badge>
           </Flex>
 
@@ -52,13 +61,13 @@ const ExpensesTableCard = () => {
             </TableHead>
 
             <TableBody>
-              {monthExpenses.map(({ id, date, amount, description, category }) => (
+              {monthTransactions.map(({ id, date, amount, description, category }) => (
                 <TableRow key={id}>
                   <TableCell>{date.toDate().toLocaleString('es', DATE_OPTIONS)}</TableCell>
                   <TableCell>{description}</TableCell>
                   <TableCell>{amountFormatter(amount)}</TableCell>
                   <TableCell>
-                    <Badge color='gray'>{EXPENSES_CATEGORIES[category]}</Badge>
+                    <Badge color='gray'>{categories[category]}</Badge>
                   </TableCell>
                   <TableCell>
                     <Button
@@ -66,7 +75,7 @@ const ExpensesTableCard = () => {
                       className='[&>svg]:m-0'
                       variant='light'
                       icon={XMarkIcon}
-                      onClick={() => deleteExpense(id)}
+                      onClick={() => deleteTransaction(id)}
                     />
                   </TableCell>
                 </TableRow>
@@ -81,4 +90,4 @@ const ExpensesTableCard = () => {
   );
 };
 
-export default ExpensesTableCard;
+export default TransactionsTableCard;
