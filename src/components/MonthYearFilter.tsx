@@ -1,5 +1,4 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { useMemo } from 'react';
 import { Icon, Title } from '@tremor/react';
 import useFilters from '../hooks/useFilters';
 
@@ -42,7 +41,7 @@ const MonthYearFilter = () => {
     resetMonthYearFilter();
   };
 
-  const isNextButtonDisabled = useMemo(() => {
+  const isNextButtonDisabled = () => {
     const { month, year } = monthYearFilter;
     const maxMonth = new Date().getMonth() + 1; // Maximum allowed month (actual month)
     const maxYear = new Date().getFullYear(); // Maximum allowed year (actual year)
@@ -53,7 +52,7 @@ const MonthYearFilter = () => {
     const nextYear = currentDate.getFullYear(); // Get the year for the next month
 
     return nextYear > maxYear || (nextYear === maxYear && nextMonth >= maxMonth);
-  }, [monthYearFilter]);
+  };
 
   return (
     <div className='flex gap-1 items-center justify-center'>
@@ -72,14 +71,14 @@ const MonthYearFilter = () => {
       </Title>
 
       <button
-        className={!isNextButtonDisabled ? 'rounded hover:bg-gray-200 transition-colors' : ''}
+        className={!isNextButtonDisabled() ? 'rounded hover:bg-gray-200 transition-colors' : ''}
         onClick={updateMonthYear(MONTH_YEAR_FILTER_ACTIONS.NEXT)}
-        disabled={isNextButtonDisabled}
+        disabled={isNextButtonDisabled()}
       >
         <Icon
           icon={ChevronRightIcon}
           color='gray'
-          className={isNextButtonDisabled ? 'text-gray-300' : ''}
+          className={isNextButtonDisabled() ? 'text-gray-300' : ''}
         />
       </button>
     </div>
