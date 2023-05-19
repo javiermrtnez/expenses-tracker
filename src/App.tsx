@@ -18,7 +18,7 @@ function App() {
         <Route element={<BaseLayout />}>
           <Route element={<AuthenticatedRoute />}>
             <Route path='/dashboard' element={<SummaryPage />} />
-            <Route path='/income' element={<IncomesPage />} />
+            <Route path='/incomes' element={<IncomesPage />} />
             <Route path='/expenses' element={<ExpensesPage />} />
           </Route>
 

@@ -13,7 +13,7 @@ const NAVIGATION = [
   },
   {
     name: 'Ingresos',
-    to: '/income',
+    to: '/incomes',
   },
   {
     name: 'Gastos',
