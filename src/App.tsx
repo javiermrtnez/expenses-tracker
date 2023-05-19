@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import BaseLayout from './layouts/BaseLayout';
 import ExpensesPage from './pages/ExpensesPage';
-import SummaryPage from './pages/SummaryPage';
+import DashboardPage from './pages/DashboardPage';
 import Toaster from './components/Toaster';
 import { AuthProvider } from './context/AuthContext';
 import { AuthenticatedRoute, UnauthenticatedRoute } from './guards/AuthGuard';
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route element={<BaseLayout />}>
           <Route element={<AuthenticatedRoute />}>
-            <Route path='/dashboard' element={<SummaryPage />} />
+            <Route path='/dashboard' element={<DashboardPage />} />
             <Route path='/incomes' element={<IncomesPage />} />
             <Route path='/expenses' element={<ExpensesPage />} />
           </Route>

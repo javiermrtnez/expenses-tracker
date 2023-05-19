@@ -7,7 +7,7 @@ import useExpenses from '../hooks/useExpenses';
 import { amountFormatter } from '../utils/functions/formatters';
 import MonthYearFilter from '../components/MonthYearFilter';
 
-const SummaryPage = () => {
+const DashboardPage = () => {
   const { monthIncomes } = useIncomes();
   const { monthExpenses } = useExpenses();
 
@@ -54,4 +54,4 @@ const SummaryPage = () => {
   );
 };
 
-export default SummaryPage;
+export default DashboardPage;
