@@ -21,7 +21,7 @@ interface Props {
   loadingStore: boolean;
   monthTransactions: Transaction[];
   categories: Record<string, string>;
-  deleteTransaction: (id: TransactionId) => void;
+  deleteTransaction: (id: TransactionId) => () => void;
 }
 
 const TransactionsTableCard = ({
@@ -75,7 +75,7 @@ const TransactionsTableCard = ({
                       className='[&>svg]:m-0'
                       variant='light'
                       icon={XMarkIcon}
-                      onClick={() => deleteTransaction(id)}
+                      onClick={deleteTransaction(id)}
                     />
                   </TableCell>
                 </TableRow>

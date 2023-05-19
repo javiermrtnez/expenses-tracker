@@ -9,7 +9,7 @@ import TransactionsTableCard from '../components/TransactionsTableCard';
 
 const IncomesPage = () => {
   const { showModal } = useModal();
-  const { loadingIncomesStore, monthIncomes } = useIncomes();
+  const { loadingIncomesStore, monthIncomes, deleteIncome } = useIncomes();
 
   return (
     <div className='flex flex-col gap-6'>
@@ -31,7 +31,7 @@ const IncomesPage = () => {
         loadingStore={loadingIncomesStore}
         monthTransactions={monthIncomes}
         categories={INCOMES_CATEGORIES}
-        deleteTransaction={() => {}}
+        deleteTransaction={deleteIncome}
       />
     </div>
   );

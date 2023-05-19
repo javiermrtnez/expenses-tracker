@@ -31,7 +31,7 @@ const useExpenses = () => {
       });
   };
 
-  const deleteExpense = (id: TransactionId) => {
+  const deleteExpense = (id: TransactionId) => () => {
     setLoading(true);
 
     expensesService
