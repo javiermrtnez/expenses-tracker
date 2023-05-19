@@ -75,6 +75,7 @@ const TransactionSummary = ({ loadingStore, monthTransactions, categories }: Pro
           {selectedView === TABS_LIST.BY_DAY.value && (
             <TransactionsByDay monthTransactionsByDay={monthTransactionsByDay} />
           )}
+
           {selectedView === TABS_LIST.BY_CATEGORY.value && (
             <TransactionsByCategory
               monthTransactionsByCategory={monthTransactionsByCategory}

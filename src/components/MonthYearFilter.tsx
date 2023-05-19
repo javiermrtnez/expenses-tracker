@@ -65,7 +65,7 @@ const MonthYearFilter = () => {
       </button>
 
       <Title
-        className='leading-none cursor-pointer w-36 flex justify-center'
+        className='h-full min-h-[32px] leading-none cursor-pointer w-36 flex justify-center items-center rounded hover:bg-gray-200 transition-colors'
         onClick={resetMonthYear}
       >
         {todayMonthYear}
