@@ -6,6 +6,7 @@ import useIncomes from '../hooks/useIncomes';
 import useExpenses from '../hooks/useExpenses';
 import { amountFormatter } from '../utils/functions/formatters';
 import MonthYearFilter from '../components/MonthYearFilter';
+import AnnualSummaryChart from '../components/AnnualSummaryChart';
 
 const DashboardPage = () => {
   const { monthIncomes } = useIncomes();
@@ -47,7 +48,7 @@ const DashboardPage = () => {
         <Text>Gráfico de gastos e ingresos anuales</Text>
 
         <Card className='mt-6'>
-          <div className='h-96' />
+          <AnnualSummaryChart />
         </Card>
       </div>
     </div>
