@@ -9,8 +9,8 @@ import MonthYearFilter from '../components/MonthYearFilter';
 import AnnualSummaryChart from '../components/AnnualSummaryChart';
 
 const DashboardPage = () => {
-  const { monthIncomes } = useIncomes();
-  const { monthExpenses } = useExpenses();
+  const { monthIncomes, loadingIncomesStore } = useIncomes();
+  const { monthExpenses, loadingExpensesStore } = useExpenses();
 
   const monthIncomesTotalAmount = getMonthTransactionsTotalAmount(monthIncomes);
   const monthExpensesTotalAmount = getMonthTransactionsTotalAmount(monthExpenses);
@@ -33,12 +33,14 @@ const DashboardPage = () => {
             icon={BanknotesIcon}
             color='emerald'
             value={amountFormatter(monthIncomesTotalAmount)}
+            loading={loadingIncomesStore}
           />
           <TransactionMetricCard
             title='Gastos'
             icon={CreditCardIcon}
             color='red'
             value={amountFormatter(monthExpensesTotalAmount)}
+            loading={loadingExpensesStore}
           />
         </Grid>
       </div>
