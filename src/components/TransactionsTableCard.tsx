@@ -16,6 +16,7 @@ import { amountFormatter } from '../utils/functions/formatters';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import TableSkeleton from './skeletons/TableSkeleton';
 import { Transaction, TransactionId } from '../utils/interfaces/transaction.interface';
+import EmptyData from './EmptyData';
 
 interface Props {
   loadingStore: boolean;
@@ -42,6 +43,7 @@ const TransactionsTableCard = ({
         <>
           <Flex justifyContent='start' className='space-x-2'>
             <Title>Gastos</Title>
+
             <Badge size='md' color='gray'>
               {monthTransactions.length}
             </Badge>
@@ -60,28 +62,34 @@ const TransactionsTableCard = ({
               </TableRow>
             </TableHead>
 
-            <TableBody>
-              {monthTransactions.map(({ id, date, amount, description, category }) => (
-                <TableRow key={id}>
-                  <TableCell>{date.toDate().toLocaleString('es', DATE_OPTIONS)}</TableCell>
-                  <TableCell>{description}</TableCell>
-                  <TableCell>{amountFormatter(amount)}</TableCell>
-                  <TableCell>
-                    <Badge color='gray'>{categories[category]}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      color='gray'
-                      className='[&>svg]:m-0'
-                      variant='light'
-                      icon={XMarkIcon}
-                      onClick={deleteTransaction(id)}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+            {monthTransactions.length > 0 && (
+              <TableBody>
+                {monthTransactions.map(({ id, date, amount, description, category }) => (
+                  <TableRow key={id}>
+                    <TableCell>{date.toDate().toLocaleString('es', DATE_OPTIONS)}</TableCell>
+                    <TableCell>{description}</TableCell>
+                    <TableCell>{amountFormatter(amount)}</TableCell>
+                    <TableCell>
+                      <Badge color='gray'>{categories[category]}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        color='gray'
+                        className='[&>svg]:m-0'
+                        variant='light'
+                        icon={XMarkIcon}
+                        onClick={deleteTransaction(id)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            )}
           </Table>
+
+          {monthTransactions.length === 0 && (
+            <EmptyData text='No hay transacciones para el periodo seleccionado' />
+          )}
         </>
       ) : (
         <TableSkeleton rows={10} />

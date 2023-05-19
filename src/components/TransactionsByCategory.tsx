@@ -1,6 +1,7 @@
 import { List, ListItem, ProgressBar, Text } from '@tremor/react';
 import { amountFormatter } from '../utils/functions/formatters';
 import { TransactionCategoryAmount } from '../utils/interfaces/transaction.interface';
+import EmptyData from './EmptyData';
 
 interface Props {
   monthTransactionsByCategory: TransactionCategoryAmount[];
@@ -19,18 +20,23 @@ const TransactionsByCategory = ({
 
   return (
     <List className='mt-4'>
-      {monthTransactionsByCategory.map((transaction) => (
-        <ListItem key={transaction.category}>
-          <div className='w-full'>
-            <Text>{categories[transaction.category]}</Text>
-            <ProgressBar
-              percentageValue={getPercentageValue(transaction.amount)}
-              label={`${getPercentageValue(transaction.amount)}%`}
-              tooltip={amountFormatter(transaction.amount)}
-            />
-          </div>
-        </ListItem>
-      ))}
+      {monthTransactionsByCategory.length > 0 ? (
+        monthTransactionsByCategory.map((transaction) => (
+          <ListItem key={transaction.category}>
+            <div className='w-full'>
+              <Text>{categories[transaction.category]}</Text>
+
+              <ProgressBar
+                percentageValue={getPercentageValue(transaction.amount)}
+                label={`${getPercentageValue(transaction.amount)}%`}
+                tooltip={amountFormatter(transaction.amount)}
+              />
+            </div>
+          </ListItem>
+        ))
+      ) : (
+        <EmptyData text='No hay transacciones para el periodo seleccionado' />
+      )}
     </List>
   );
 };
