@@ -8,6 +8,8 @@ import { amountFormatter } from '../utils/functions/formatters';
 import MonthYearFilter from '../components/MonthYearFilter';
 import AnnualSummaryChart from '../components/AnnualSummaryChart';
 import YearFilter from '../components/YearFilter';
+import { CurrencyEuroIcon } from '@heroicons/react/20/solid';
+import { getSavingsPercentage } from '../utils/functions/transactions';
 
 const DashboardPage = () => {
   const { monthIncomes, loadingIncomesStore } = useIncomes();
@@ -15,6 +17,7 @@ const DashboardPage = () => {
 
   const monthIncomesTotalAmount = getMonthTransactionsTotalAmount(monthIncomes);
   const monthExpensesTotalAmount = getMonthTransactionsTotalAmount(monthExpenses);
+  const monthSavingsTotalAmount = monthIncomesTotalAmount - monthExpensesTotalAmount;
 
   return (
     <div className='flex flex-col gap-8'>
@@ -28,7 +31,7 @@ const DashboardPage = () => {
           <MonthYearFilter />
         </div>
 
-        <Grid numColsMd={2} className='mt-6 gap-6'>
+        <Grid numColsSm={2} numColsLg={3} className='mt-6 gap-6'>
           <TransactionMetricCard
             title='Ingresos'
             icon={BanknotesIcon}
@@ -42,6 +45,14 @@ const DashboardPage = () => {
             color='fuchsia'
             value={amountFormatter(monthExpensesTotalAmount)}
             loading={loadingExpensesStore}
+          />
+          <TransactionMetricCard
+            title='Ahorro'
+            icon={CurrencyEuroIcon}
+            color='amber'
+            value={amountFormatter(monthSavingsTotalAmount)}
+            loading={loadingIncomesStore || loadingExpensesStore}
+            percentage={getSavingsPercentage(monthSavingsTotalAmount, monthIncomesTotalAmount)}
           />
         </Grid>
       </div>
