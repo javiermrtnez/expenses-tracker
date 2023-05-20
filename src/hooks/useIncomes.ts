@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import * as incomesService from '../services/incomes.service';
 import { useIncomesStore } from '../store/incomes';
 import useFilters from './useFilters';
 import { getMonthTransactions } from '../utils/functions/monthTransactions';
 import { TransactionId, TransactionWithoutId } from '../utils/interfaces/transaction.interface';
+import { getYearTransactionsByMonth } from '../utils/functions/yearTransactions';
 
 const useIncomes = () => {
   const incomes = useIncomesStore((state) => state.incomes);
@@ -11,7 +12,7 @@ const useIncomes = () => {
   const loadingIncomesStore = useIncomesStore((state) => state.loadingIncomesStore);
   const deleteIncomeStore = useIncomesStore((state) => state.deleteIncomeStore);
 
-  const { monthYearFilter } = useFilters();
+  const { monthYearFilter, yearFilter } = useFilters();
 
   const [loading, setLoading] = useState(false);
 
@@ -49,12 +50,21 @@ const useIncomes = () => {
       });
   };
 
-  const monthIncomes = getMonthTransactions(incomes, monthYearFilter);
+  const monthIncomes = useMemo(
+    () => getMonthTransactions(incomes, monthYearFilter),
+    [incomes, monthYearFilter]
+  );
+
+  const yearIncomes = useMemo(
+    () => getYearTransactionsByMonth(incomes, yearFilter),
+    [incomes, yearFilter]
+  );
 
   return {
     loadingIncomesStore,
     loading,
     monthIncomes,
+    yearIncomes,
     createIncome,
     deleteIncome,
   };

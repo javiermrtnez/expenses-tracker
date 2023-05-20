@@ -7,6 +7,7 @@ import useExpenses from '../hooks/useExpenses';
 import { amountFormatter } from '../utils/functions/formatters';
 import MonthYearFilter from '../components/MonthYearFilter';
 import AnnualSummaryChart from '../components/AnnualSummaryChart';
+import YearFilter from '../components/YearFilter';
 
 const DashboardPage = () => {
   const { monthIncomes, loadingIncomesStore } = useIncomes();
@@ -18,7 +19,7 @@ const DashboardPage = () => {
   return (
     <div className='flex flex-col gap-8'>
       <div>
-        <div className='flex justify-between items-center'>
+        <div className='flex gap-1 justify-between items-center'>
           <div>
             <Title>Resumen mensual</Title>
             <Text>Suma total de ingresos y gastos mensuales</Text>
@@ -46,8 +47,14 @@ const DashboardPage = () => {
       </div>
 
       <div>
-        <Title>Resumen anual</Title>
-        <Text>Gráfico de gastos e ingresos anuales</Text>
+        <div className='flex gap-1 justify-between items-center'>
+          <div>
+            <Title>Resumen anual</Title>
+            <Text>Gráfico de gastos e ingresos anuales</Text>
+          </div>
+
+          <YearFilter />
+        </div>
 
         <Card className='mt-6'>
           <AnnualSummaryChart />

@@ -10,6 +10,7 @@ import {
   TransactionDateAmount,
 } from '../interfaces/transaction.interface';
 import { MonthYearFilter } from '../interfaces/filter.interface';
+import { getNormalizedTransactions } from './transactions';
 
 export const getMonthTransactions = (
   transactions: Transaction[],
@@ -27,13 +28,6 @@ export const getMonthTransactions = (
 
 export const getMonthTransactionsTotalAmount = (transactions: Transaction[]) => {
   return transactions.reduce((acc, curr) => acc + curr.amount, 0);
-};
-
-const getNormalizedTransactions = (transactions: Transaction[]) => {
-  return transactions.map((transaction) => ({
-    amount: transaction.amount,
-    date: transaction.date,
-  }));
 };
 
 const getTransactionsGroupedByDay = (normalizedTransactions: TransactionDateAmount[]) => {
