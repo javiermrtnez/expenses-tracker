@@ -1,7 +1,7 @@
 import { Card, Title, Text, Grid } from '@tremor/react';
 import TransactionMetricCard from '../components/TransactionMetricCard';
 import { BanknotesIcon, CreditCardIcon } from '@heroicons/react/24/solid';
-import { getMonthTransactionsTotalAmount } from '../utils/functions/transactions';
+import { getMonthTransactionsTotalAmount } from '../utils/functions/monthTransactions';
 import useIncomes from '../hooks/useIncomes';
 import useExpenses from '../hooks/useExpenses';
 import { amountFormatter } from '../utils/functions/formatters';

@@ -10,7 +10,7 @@ import {
   getMonthTransactionsByCategory,
   getMonthTransactionsByDay,
   getMonthTransactionsTotalAmount,
-} from '../utils/functions/transactions';
+} from '../utils/functions/monthTransactions';
 import useFilters from '../hooks/useFilters';
 import { Transaction } from '../utils/interfaces/transaction.interface';
 
