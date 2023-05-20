@@ -22,7 +22,7 @@ const DashboardPage = () => {
   return (
     <div className='flex flex-col gap-8'>
       <div>
-        <div className='flex gap-1 justify-between items-center'>
+        <div className='flex flex-col gap-6 justify-between sm:flex-row sm:items-center'>
           <div>
             <Title>Resumen mensual</Title>
             <Text>Suma total de ingresos y gastos mensuales</Text>
@@ -58,7 +58,7 @@ const DashboardPage = () => {
       </div>
 
       <div>
-        <div className='flex gap-1 justify-between items-center'>
+        <div className='flex flex-col gap-6 justify-between sm:flex-row sm:items-center'>
           <div>
             <Title>Resumen anual</Title>
             <Text>Gráfico de gastos e ingresos anuales</Text>
