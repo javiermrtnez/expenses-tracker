@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import * as expensesService from '../services/expenses.service';
 import { useExpensesStore } from '../store/expenses';
 import useFilters from './useFilters';
-import { getMonthTransactions } from '../utils/functions/transactions';
+import { getMonthTransactions } from '../utils/functions/monthTransactions';
 import { TransactionId, TransactionWithoutId } from '../utils/interfaces/transaction.interface';
 
 const useExpenses = () => {
@@ -47,10 +47,7 @@ const useExpenses = () => {
       });
   };
 
-  const monthExpenses = useMemo(
-    () => getMonthTransactions(expenses, monthYearFilter),
-    [expenses, monthYearFilter]
-  );
+  const monthExpenses = getMonthTransactions(expenses, monthYearFilter);
 
   return {
     loadingExpensesStore,
