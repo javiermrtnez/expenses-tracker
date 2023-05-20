@@ -1,6 +1,5 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { Icon, Title } from '@tremor/react';
 import useFilters from '../hooks/useFilters';
+import PreviousNextFilter from './PreviousNextFilter';
 
 const MONTH_YEAR_FILTER_ACTIONS = {
   PREVIOUS: 'previous',
@@ -51,33 +50,13 @@ const MonthYearFilter = () => {
   };
 
   return (
-    <div className='flex gap-1 items-center justify-center'>
-      <button
-        className='rounded hover:bg-gray-200 transition-colors'
-        onClick={updateMonthYear(MONTH_YEAR_FILTER_ACTIONS.PREVIOUS)}
-      >
-        <Icon icon={ChevronLeftIcon} color='gray' />
-      </button>
-
-      <Title
-        className='h-full min-h-[32px] leading-none cursor-pointer w-36 flex justify-center items-center rounded hover:bg-gray-200 transition-colors'
-        onClick={resetMonthYearFilter}
-      >
-        {todayMonthYear}
-      </Title>
-
-      <button
-        className={!isNextButtonDisabled() ? 'rounded hover:bg-gray-200 transition-colors' : ''}
-        onClick={updateMonthYear(MONTH_YEAR_FILTER_ACTIONS.NEXT)}
-        disabled={isNextButtonDisabled()}
-      >
-        <Icon
-          icon={ChevronRightIcon}
-          color='gray'
-          className={isNextButtonDisabled() ? 'text-gray-300' : ''}
-        />
-      </button>
-    </div>
+    <PreviousNextFilter
+      previousOnClick={updateMonthYear(MONTH_YEAR_FILTER_ACTIONS.PREVIOUS)}
+      nextOnClick={updateMonthYear(MONTH_YEAR_FILTER_ACTIONS.NEXT)}
+      resetOnClick={resetMonthYearFilter}
+      text={todayMonthYear}
+      disabled={isNextButtonDisabled()}
+    />
   );
 };
 
