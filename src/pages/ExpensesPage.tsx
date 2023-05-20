@@ -14,11 +14,11 @@ const ExpensesPage = () => {
   return (
     <div className='flex flex-col gap-6'>
       <div className='flex gap-6 justify-center flex-wrap sm:justify-between'>
-        <MonthYearFilter />
-
         <AddTransactionButton onClick={showModal(MODAL_CODES.ADD_EXPENSE)}>
           Añadir gasto
         </AddTransactionButton>
+
+        <MonthYearFilter />
       </div>
 
       <TransactionSummary
