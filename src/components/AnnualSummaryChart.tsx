@@ -3,10 +3,11 @@ import { amountFormatter } from '../utils/functions/formatters';
 import useIncomes from '../hooks/useIncomes';
 import useExpenses from '../hooks/useExpenses';
 import { MONTHS } from '../utils/constants/months';
+import AnnualSummarySkeleton from './skeletons/AnnualSummarySkeleton';
 
 const AnnualSummaryChart = () => {
-  const { yearIncomes } = useIncomes();
-  const { yearExpenses } = useExpenses();
+  const { yearIncomes, loadingIncomesStore } = useIncomes();
+  const { yearExpenses, loadingExpensesStore } = useExpenses();
 
   const transactionsByMonth = yearIncomes.map((income, index) => ({
     Mes: MONTHS[income.month],
@@ -14,15 +15,17 @@ const AnnualSummaryChart = () => {
     Gastos: yearExpenses[index].amount,
   }));
 
-  return (
+  return !loadingIncomesStore && !loadingExpensesStore ? (
     <AreaChart
-      className='mt-4 h-80'
+      className='h-80'
       data={transactionsByMonth}
       categories={['Ingresos', 'Gastos']}
       index='Mes'
       colors={['indigo', 'fuchsia']}
       valueFormatter={amountFormatter}
     />
+  ) : (
+    <AnnualSummarySkeleton />
   );
 };
 
