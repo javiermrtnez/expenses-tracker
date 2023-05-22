@@ -1,4 +1,4 @@
-import { Card, Title, Text, Grid } from '@tremor/react';
+import { Card, Title, Text, Grid, Color } from '@tremor/react';
 import TransactionMetricCard from '../components/TransactionMetricCard';
 import { BanknotesIcon, CreditCardIcon } from '@heroicons/react/24/solid';
 import { getMonthTransactionsTotalAmount } from '../utils/functions/monthTransactions';
@@ -11,6 +11,15 @@ import YearFilter from '../components/YearFilter';
 import { CurrencyEuroIcon } from '@heroicons/react/20/solid';
 import { getSavingsPercentage } from '../utils/functions/transactions';
 
+interface TransactionsMetricCard {
+  title: string;
+  icon: React.ElementType;
+  color: Color;
+  value: string;
+  loading: boolean;
+  percentage?: number;
+}
+
 const DashboardPage = () => {
   const { monthIncomes, loadingIncomesStore } = useIncomes();
   const { monthExpenses, loadingExpensesStore } = useExpenses();
@@ -18,6 +27,31 @@ const DashboardPage = () => {
   const monthIncomesTotalAmount = getMonthTransactionsTotalAmount(monthIncomes);
   const monthExpensesTotalAmount = getMonthTransactionsTotalAmount(monthExpenses);
   const monthSavingsTotalAmount = monthIncomesTotalAmount - monthExpensesTotalAmount;
+
+  const transactionsMetricCards: TransactionsMetricCard[] = [
+    {
+      title: 'Ingresos',
+      icon: BanknotesIcon,
+      color: 'indigo',
+      value: amountFormatter(monthIncomesTotalAmount),
+      loading: loadingIncomesStore,
+    },
+    {
+      title: 'Gastos',
+      icon: CreditCardIcon,
+      color: 'fuchsia',
+      value: amountFormatter(monthExpensesTotalAmount),
+      loading: loadingExpensesStore,
+    },
+    {
+      title: 'Ahorro',
+      icon: CurrencyEuroIcon,
+      color: 'amber',
+      value: amountFormatter(monthSavingsTotalAmount),
+      loading: loadingIncomesStore || loadingExpensesStore,
+      percentage: getSavingsPercentage(monthSavingsTotalAmount, monthIncomesTotalAmount),
+    },
+  ];
 
   return (
     <div className='flex flex-col gap-8'>
@@ -32,28 +66,16 @@ const DashboardPage = () => {
         </div>
 
         <Grid numColsSm={2} numColsLg={3} className='mt-6 gap-6'>
-          <TransactionMetricCard
-            title='Ingresos'
-            icon={BanknotesIcon}
-            color='indigo'
-            value={amountFormatter(monthIncomesTotalAmount)}
-            loading={loadingIncomesStore}
-          />
-          <TransactionMetricCard
-            title='Gastos'
-            icon={CreditCardIcon}
-            color='fuchsia'
-            value={amountFormatter(monthExpensesTotalAmount)}
-            loading={loadingExpensesStore}
-          />
-          <TransactionMetricCard
-            title='Ahorro'
-            icon={CurrencyEuroIcon}
-            color='amber'
-            value={amountFormatter(monthSavingsTotalAmount)}
-            loading={loadingIncomesStore || loadingExpensesStore}
-            percentage={getSavingsPercentage(monthSavingsTotalAmount, monthIncomesTotalAmount)}
-          />
+          {transactionsMetricCards.map(({ title, icon, color, value, loading, percentage }) => (
+            <TransactionMetricCard
+              title={title}
+              icon={icon}
+              color={color}
+              value={value}
+              loading={loading}
+              percentage={percentage}
+            />
+          ))}
         </Grid>
       </div>
 
