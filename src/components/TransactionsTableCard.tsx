@@ -19,6 +19,8 @@ import { Transaction, TransactionId } from '../utils/interfaces/transaction.inte
 import EmptyData from './EmptyData';
 
 interface Props {
+  title: string;
+  subtitle: string;
   loadingStore: boolean;
   monthTransactions: Transaction[];
   categories: Record<string, string>;
@@ -26,6 +28,8 @@ interface Props {
 }
 
 const TransactionsTableCard = ({
+  title,
+  subtitle,
   loadingStore,
   monthTransactions,
   categories,
@@ -42,14 +46,14 @@ const TransactionsTableCard = ({
       {!loadingStore ? (
         <>
           <Flex justifyContent='start' className='space-x-2'>
-            <Title>Gastos</Title>
+            <Title>{title}</Title>
 
             <Badge size='md' color='gray'>
               {monthTransactions.length}
             </Badge>
           </Flex>
 
-          <Text className='mt-2'>Resumen de los gastos de este mes</Text>
+          <Text className='mt-2'>{subtitle}</Text>
 
           <Table className='mt-6'>
             <TableHead>

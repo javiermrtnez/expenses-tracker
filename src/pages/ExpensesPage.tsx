@@ -18,12 +18,15 @@ const ExpensesPage = () => {
       />
 
       <TransactionSummary
+        title='Gastos mensuales'
         loadingStore={loadingExpensesStore}
         monthTransactions={monthExpenses}
         categories={EXPENSES_CATEGORIES}
       />
 
       <TransactionsTableCard
+        title='Gastos'
+        subtitle='Resumen de los gastos mensuales'
         loadingStore={loadingExpensesStore}
         monthTransactions={monthExpenses}
         categories={EXPENSES_CATEGORIES}
