@@ -1,11 +1,10 @@
 import TransactionsTableCard from '../components/TransactionsTableCard';
-import MonthYearFilter from '../components/MonthYearFilter';
 import useModal from '../hooks/useModal';
 import { MODAL_CODES } from '../utils/constants/modalCodes';
-import AddTransactionButton from '../components/AddTransactionButton';
 import TransactionSummary from '../components/TransactionSummary';
 import useExpenses from '../hooks/useExpenses';
 import { EXPENSES_CATEGORIES } from '../utils/constants/categories';
+import AddTransactionButtonFilter from '../components/AddTransactionButtonFilter';
 
 const ExpensesPage = () => {
   const { showModal } = useModal();
@@ -13,13 +12,10 @@ const ExpensesPage = () => {
 
   return (
     <div className='flex flex-col gap-6'>
-      <div className='flex gap-6 justify-center flex-wrap sm:justify-between'>
-        <AddTransactionButton onClick={showModal(MODAL_CODES.ADD_EXPENSE)}>
-          Añadir gasto
-        </AddTransactionButton>
-
-        <MonthYearFilter />
-      </div>
+      <AddTransactionButtonFilter
+        buttonText='Añadir gasto'
+        buttonOnClick={showModal(MODAL_CODES.ADD_EXPENSE)}
+      />
 
       <TransactionSummary
         loadingStore={loadingExpensesStore}

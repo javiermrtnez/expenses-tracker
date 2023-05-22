@@ -28,12 +28,13 @@ const TABS_LIST = {
 };
 
 interface Props {
+  title: string;
   loadingStore: boolean;
   monthTransactions: Transaction[];
   categories: Record<string, string>;
 }
 
-const TransactionSummary = ({ loadingStore, monthTransactions, categories }: Props) => {
+const TransactionSummary = ({ title, loadingStore, monthTransactions, categories }: Props) => {
   const { monthYearFilter } = useFilters();
   const [selectedView, setSelectedView] = useState(TABS_LIST.BY_DAY.value);
   const [showAmount, setShowAmount] = useState(true);
@@ -52,7 +53,7 @@ const TransactionSummary = ({ loadingStore, monthTransactions, categories }: Pro
         <>
           <div className='flex justify-between'>
             <div>
-              <Text>Gasto mensual</Text>
+              <Text>{title}</Text>
 
               <Metric>
                 {showAmount ? amountFormatter(monthTransactionsTotalAmount) : '•••• €'}
