@@ -1,8 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../firebase/config';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import useExpenses from '../hooks/useExpenses';
-import useIncomes from '../hooks/useIncomes';
 import { useIncomesStore } from '../store/incomes';
 import { useExpensesStore } from '../store/expenses';
 
