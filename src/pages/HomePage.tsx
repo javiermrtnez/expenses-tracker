@@ -18,7 +18,7 @@
 
 const HomePage = () => {
   return (
-    <div className='mt-8 flex flex-col gap-10 items-center'>
+    <div className='flex flex-col gap-10 items-center lg:mt-8'>
       <h1 className='flex relative flex-col gap-4 items-center text-8xl text-center font-bold select-none lg:flex-row lg:gap-2 lg:text-7xl'>
         {/* {ANIMATED_TEXTS.map(({ text, fromColor, toColor }, index) => (
           <div key={text} className='relative'>
