@@ -66,59 +66,67 @@ const Navbar = () => {
           </ul>
         )}
 
-        <div className='hidden sm:flex sm:flex-1 sm:justify-end'>
+        <div
+          className={joinClassNames(
+            'sm:flex sm:flex-1 sm:justify-end',
+            pathname !== '/' ? 'hidden' : ''
+          )}
+        >
           {user ? <SignOutButton /> : <LogInButton />}
         </div>
 
-        <div className='sm:hidden'>
-          <button onClick={toggleMobileMenuOpen} className='transition-transform w-6 h-10'>
-            <div
-              className={joinClassNames(
-                'w-full h-full flex flex-col pointer-events-none justify-center items-center before:block before:rounded before:h-px before:w-5 before:bg-black before:transition-transform after:block after:rounded after:h-px after:w-5 after:bg-black after:transition-transform',
-                isMobileMenuOpen
-                  ? 'before:translate-y-px before:rotate-45 after:translate-y-0 after:-rotate-45'
-                  : 'before:-translate-y-1 before:rotate-0 after:translate-y-1 after:rotate-0'
-              )}
-            />
-          </button>
-
-          {/* MOBILE MENU */}
-          {isMobileMenuOpen && (
-            <div
-              className='fixed z-10 p-[var(--page-padding)] left-0 right-0 bottom-0 top-[var(--navbar-height)] h-[calc(100vh-var(--navbar-height))] w-screen bg-white/95'
-              onClick={toggleMobileMenuOpen}
-            >
+        {/* En la HomePage nunca mostramos el menú hamburguesa porque en la Navbar solo hay un botón y cabe perfectamente */}
+        {pathname !== '/' && (
+          <div className='sm:hidden'>
+            <button onClick={toggleMobileMenuOpen} className='transition-transform w-6 h-10'>
               <div
-                className='w-full flex flex-col gap-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-md'
-                onClick={(e) => e.stopPropagation()}
-              >
-                {user && (
-                  <ul className='flex flex-col gap-2'>
-                    {NAVIGATION.map(({ name, to }) => (
-                      <li key={name} className='flex content-center items-center'>
-                        <button
-                          className={joinClassNames(
-                            'py-2 px-3 text-gray-600 w-full text-sm text-left rounded-md leading-none hover:text-gray-950 hover:bg-gray-100 transition-colors',
-                            pathname === to
-                              ? ' bg-gray-200 hover:bg-gray-200 text-gray-950 font-medium'
-                              : ''
-                          )}
-                          onClick={() => handleNavigate(to)}
-                        >
-                          {name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                className={joinClassNames(
+                  'w-full h-full flex flex-col pointer-events-none justify-center items-center before:block before:rounded before:h-px before:w-5 before:bg-black before:transition-transform after:block after:rounded after:h-px after:w-5 after:bg-black after:transition-transform',
+                  isMobileMenuOpen
+                    ? 'before:translate-y-px before:rotate-45 after:translate-y-0 after:-rotate-45'
+                    : 'before:-translate-y-1 before:rotate-0 after:translate-y-1 after:rotate-0'
                 )}
+              />
+            </button>
 
-                <div className='[&>button]:w-full'>
-                  {user ? <SignOutButton /> : <LogInButton />}
+            {/* MOBILE MENU */}
+            {isMobileMenuOpen && (
+              <div
+                className='fixed z-10 p-[var(--page-padding)] left-0 right-0 bottom-0 top-[var(--navbar-height)] h-[calc(100vh-var(--navbar-height))] w-screen bg-white/95'
+                onClick={toggleMobileMenuOpen}
+              >
+                <div
+                  className='w-full flex flex-col gap-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-md'
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {user && (
+                    <ul className='flex flex-col gap-2'>
+                      {NAVIGATION.map(({ name, to }) => (
+                        <li key={name} className='flex content-center items-center'>
+                          <button
+                            className={joinClassNames(
+                              'py-2 px-3 text-gray-600 w-full text-sm text-left rounded-md leading-none hover:text-gray-950 hover:bg-gray-100 transition-colors',
+                              pathname === to
+                                ? ' bg-gray-200 hover:bg-gray-200 text-gray-950 font-medium'
+                                : ''
+                            )}
+                            onClick={() => handleNavigate(to)}
+                          >
+                            {name}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <div className='[&>button]:w-full'>
+                    {user ? <SignOutButton /> : <LogInButton />}
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );
