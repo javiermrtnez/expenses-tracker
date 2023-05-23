@@ -68,6 +68,7 @@ const DashboardPage = () => {
         <Grid numColsSm={2} numColsLg={3} className='mt-6 gap-6'>
           {transactionsMetricCards.map(({ title, icon, color, value, loading, percentage }) => (
             <TransactionMetricCard
+              key={title}
               title={title}
               icon={icon}
               color={color}
