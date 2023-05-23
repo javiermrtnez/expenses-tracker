@@ -8,6 +8,7 @@ import { AuthenticatedRoute, UnauthenticatedRoute } from './guards/AuthGuard';
 import NotFoundPage from './pages/NotFoundPage';
 import Modal from './components/modals/Modal';
 import IncomesPage from './pages/IncomesPage';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           </Route>
 
           <Route element={<UnauthenticatedRoute />}>
-            <Route path='/' element={<></>} />
+            <Route path='/' element={<HomePage />} />
           </Route>
 
           <Route path='*' element={<NotFoundPage />} />
