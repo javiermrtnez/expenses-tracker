@@ -3,6 +3,7 @@ export const EXPENSES_CATEGORIES: Record<string, string> = {
   lunch: 'Almuerzo',
   snack: 'Merienda',
   dinner: 'Cena',
+  supermarket: 'Supermercado',
   gasoline: 'Gasolina',
   leisure: 'Ocio',
   personalExpenses: 'Gastos personales',
