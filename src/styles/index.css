@@ -4,12 +4,9 @@
 
 :root {
   --navbar-height: 64px;
-
   --page-padding: 20px;
   --page-width: 1000px;
   --page-width-with-padding: calc(var(--page-width) + calc(2 * var(--page-padding)));
-
-  --logo-gradient: linear-gradient(to bottom right, #10b981, #eab308)
 }
 
 /* Chrome, Safari, Edge, Opera */
