@@ -131,6 +131,7 @@ const AddTransactionModal = ({ transactionType }: Props) => {
               type='text'
               value={transactionFormData.amount}
               onChange={handleAmountChange}
+              placeholder='0,00€'
             />
           </div>
 
