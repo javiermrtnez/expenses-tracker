@@ -20,7 +20,8 @@ const TransactionsByDay = ({ monthTransactionsByDay }: Props) => {
       index='date'
       colors={['blue']}
       valueFormatter={amountFormatter}
-      showYAxis={false}
+      showYAxis
+      yAxisWidth={40}
       showLegend={false}
     />
   );
